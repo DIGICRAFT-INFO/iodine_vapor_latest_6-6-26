@@ -6,6 +6,9 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import HeroFromSlides from '@/components/sections/HeroFromSlides';
 import { slidesApi, settingsApi, enquiriesApi, servicesApi } from '@/lib/api';
+import { TfiEmail } from 'react-icons/tfi';
+import { IoMdContacts } from 'react-icons/io';
+import { FaMapLocationDot } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
 
 export default function ContactPage() {
@@ -56,10 +59,10 @@ export default function ContactPage() {
                   <a key={item.label} href={item.href} className="flex items-start gap-4 group">
                     <div className="w-12 h-12 flex-shrink-0 flex items-center justify-center border rounded-lg transition-all group-hover:border-[#e91e8c] group-hover:bg-[rgba(233,30,140,0.05)]"
                       style={{ border: '1px solid rgba(0,0,0,0.1)' }}>
-                      {item.icon === 'email' && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e91e8c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>}
-                      {item.icon === 'phone' && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e91e8c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>}
-                      {item.icon === 'location' && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e91e8c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>}
-                      {item.icon === 'clock' && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e91e8c" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>}
+                      {item.icon === 'email' && <TfiEmail size={22} color="#e91e8c" />}
+                      {item.icon === 'phone' && <IoMdContacts size={22} color="#e91e8c" />}
+                      {item.icon === 'location' && <FaMapLocationDot size={22} color="#e91e8c" />}
+                      {item.icon === 'clock' && <IoMdContacts size={22} color="#e91e8c" />}
                     </div>
                     <div>
                       <p className="font-mono text-[0.55rem] tracking-[0.15em] uppercase mb-0.5 font-semibold" style={{ color: '#999' }}>{item.label}</p>

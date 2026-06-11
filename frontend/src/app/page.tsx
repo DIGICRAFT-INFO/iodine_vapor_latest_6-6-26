@@ -122,7 +122,7 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
 
   return (
     <section
-      className="relative w-full overflow-hidden px-4 md:px-6 lg:px-12"
+      className="relative w-full overflow-hidden px-4 md:px-6 lg:px-10"
       style={{ height: '100vh', minHeight: '700px' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
@@ -369,6 +369,30 @@ function Reel({ portfolio }: { portfolio: any[] }) {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const { ref, inView } = useReveal();
+
+  // Auto-scroll on mobile every 5 seconds
+  useEffect(() => {
+    if (!portfolio?.length || !scrollRef.current) return;
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) return;
+
+    const container = scrollRef.current;
+    const scrollWidth = container.scrollWidth - container.clientWidth;
+    let direction = 1;
+
+    const interval = setInterval(() => {
+      if (!container) return;
+      const step = container.clientWidth * 0.8; // scroll 80% of viewport width
+      const newPos = container.scrollLeft + (step * direction);
+      
+      if (newPos >= scrollWidth) direction = -1;
+      if (newPos <= 0) direction = 1;
+      
+      container.scrollTo({ left: newPos, behavior: 'smooth' });
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [portfolio]);
 
   // If no portfolio items from API, hide section entirely
   if (!portfolio?.length) return null;

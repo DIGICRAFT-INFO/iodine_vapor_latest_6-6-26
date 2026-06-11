@@ -78,14 +78,14 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
   // If no slides, show minimal fallback with defaultTitle
   if (!slides?.length) {
     return (
-      <section className="relative overflow-hidden px-6 md:px-12 mt-16" style={{ minHeight: '55vh' }}>
+      <section className="relative overflow-hidden px-6 md:px-12 mt-16" style={{ minHeight: '40vh' }}>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%)' }} />
         <div className="absolute bottom-16 left-6 md:left-12 z-10">
           <motion.h1
             initial={{ y: '100%' }} animate={{ y: 0 }}
             transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="leading-[0.9]"
-            style={{ fontSize: 'clamp(4rem, 9vw, 10rem)', fontFamily: 'Bebas Neue, sans-serif', color: '#1a1a2e' }}
+            style={{ fontSize: 'clamp(2.5rem, 8vw, 8rem)', fontFamily: 'Bebas Neue, sans-serif', color: '#1a1a2e' }}
           >
             {defaultTitle}
           </motion.h1>
@@ -107,7 +107,7 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
   return (
     <section
       className="relative overflow-hidden px-4 md:px-6 lg:px-12 mt-16"
-      style={{ minHeight: '55vh' }}
+      style={{ minHeight: '40vh' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -183,7 +183,7 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
             className="leading-[0.9]"
             style={{
               ...tStyle(slide?.title),
-              fontSize: slide?.title?.fontSize || 'clamp(4rem, 9vw, 10rem)',
+              fontSize: slide?.title?.fontSize || 'clamp(2.5rem, 8vw, 8rem)',
               fontFamily: slide?.title?.fontFamily || 'Bebas Neue, sans-serif',
               color: slide?.title?.color || '#1a1a2e',
             }}
