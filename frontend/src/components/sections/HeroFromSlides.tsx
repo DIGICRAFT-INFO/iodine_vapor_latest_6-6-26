@@ -79,13 +79,13 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
   if (!slides?.length) {
     return (
       <section className="relative overflow-hidden px-6 md:px-12 mt-16" style={{ minHeight: '55vh' }}>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #080808 0%, #141414 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%)' }} />
         <div className="absolute bottom-16 left-6 md:left-12 z-10">
           <motion.h1
             initial={{ y: '100%' }} animate={{ y: 0 }}
             transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="leading-[0.9]"
-            style={{ fontSize: 'clamp(4rem, 9vw, 10rem)', fontFamily: 'Bebas Neue, sans-serif', color: '#f5f0ea' }}
+            style={{ fontSize: 'clamp(4rem, 9vw, 10rem)', fontFamily: 'Bebas Neue, sans-serif', color: '#1a1a2e' }}
           >
             {defaultTitle}
           </motion.h1>
@@ -126,10 +126,10 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
                   onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'scale(1)'; (e.target as HTMLImageElement).style.filter = 'grayscale(20%) contrast(1.05)'; }}
                 />
               ) : (
-                <div className="w-full h-full" style={{ background: s.bgGradient || s.bgColor || '#141414' }} />
+                <div className="w-full h-full" style={{ background: s.bgGradient || s.bgColor || '#f5f5f5' }} />
               )}
-              <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, rgba(8,8,8,${s.overlayOpacity ?? 0.3}) 0%, rgba(8,8,8,${Math.min((s.overlayOpacity ?? 0.3) + 0.4, 0.9)}) 100%)` }} />
-              <span className="absolute top-6 left-4 font-mono text-[0.6rem] tracking-[0.15em]" style={{ color: 'rgba(245,240,234,0.35)' }}>0{i + 1}</span>
+              <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, rgba(0,0,0,${Math.max((s.overlayOpacity ?? 0.2) - 0.1, 0.05)}) 0%, rgba(0,0,0,${Math.min((s.overlayOpacity ?? 0.2) + 0.1, 0.4)}) 100%)` }} />
+              <span className="absolute top-6 left-4 font-mono text-[0.6rem] tracking-[0.15em]" style={{ color: 'rgba(0,0,0,0.4)' }}>0{i + 1}</span>
             </div>
           ))}
         </div>
@@ -144,12 +144,12 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.6 }}
               className="absolute inset-0"
-              style={{ background: slide?.bgGradient || slide?.bgColor || '#141414' }}
+              style={{ background: slide?.bgGradient || slide?.bgColor || '#f5f5f5' }}
             >
               {slide?.imageUrl && (
                 <>
                   <img src={imgUrl(slide.imageUrl)} alt="" className="w-full h-full object-cover" style={{ filter: 'grayscale(20%) contrast(1.05)' }} />
-                  <div className="absolute inset-0" style={{ background: `rgba(8,8,8,${slide.overlayOpacity ?? 0.5})` }} />
+                  <div className="absolute inset-0" style={{ background: `rgba(0,0,0,${slide.overlayOpacity ?? 0.25})` }} />
                 </>
               )}
             </motion.div>
@@ -185,7 +185,7 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
               ...tStyle(slide?.title),
               fontSize: slide?.title?.fontSize || 'clamp(4rem, 9vw, 10rem)',
               fontFamily: slide?.title?.fontFamily || 'Bebas Neue, sans-serif',
-              color: slide?.title?.color || '#f5f0ea',
+              color: slide?.title?.color || '#1a1a2e',
             }}
           >
             {slide?.title?.text || defaultTitle}
@@ -215,7 +215,7 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
         {slide?.paragraph?.text && (
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
             className="mb-6 max-w-lg"
-            style={{ ...tStyle(slide.paragraph), fontSize: slide.paragraph.fontSize || '0.9rem', color: slide.paragraph.color || 'rgba(245,240,234,0.5)' }}>
+            style={{ ...tStyle(slide.paragraph), fontSize: slide.paragraph.fontSize || '0.9rem', color: slide.paragraph.color || 'rgba(0,0,0,0.55)' }}>
             {slide.paragraph.text}
           </motion.p>
         )}
@@ -236,7 +236,7 @@ export default function HeroFromSlides({ slides, page, defaultTitle = 'TITLE', d
               className="flex items-center justify-center transition-all duration-300"
               style={{ minWidth: '44px', minHeight: '44px' }}
             >
-              <span style={{ width: i === current ? '24px' : '6px', height: '6px', borderRadius: '3px', background: i === current ? 'var(--c-gold)' : 'rgba(245,240,234,0.3)', display: 'block', transition: 'all 0.3s' }} />
+              <span style={{ width: i === current ? '24px' : '6px', height: '6px', borderRadius: '3px', background: i === current ? 'var(--c-gold)' : 'rgba(0,0,0,0.35)', display: 'block', transition: 'all 0.3s' }} />
             </button>
           ))}
         </div>

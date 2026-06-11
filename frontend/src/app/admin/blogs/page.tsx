@@ -35,18 +35,18 @@ export default function AdminBlogs() {
     <div>
       <AdminHeader title="Blog / Journal" subtitle={`${blogs.length} posts`} action={<AddBtn onClick={() => { setForm(emptyBlog()); setShowForm(true); }} label="New Post" />} />
 
-      <div className="border" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+      <div className="border" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
         {isLoading ? (
           <div className="p-4 space-y-2">{Array.from({length:5}).map((_,i) => <div key={i} className="h-14 shimmer" style={{ borderRadius: '2px' }} />)}</div>
         ) : blogs.length === 0 ? (
           <div className="p-12 text-center">
-            <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(245,240,234,0.2)' }}>No blog posts yet</p>
+            <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>No blog posts yet</p>
             <AddBtn onClick={() => { setForm(emptyBlog()); setShowForm(true); }} label="Write First Post" />
           </div>
         ) : blogs.map((b: any) => (
           <div key={b._id} className="flex items-center gap-4 px-5 py-4 border-b last:border-0 transition-colors"
-            style={{ borderColor: 'rgba(255,255,255,0.04)' }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)'}
+            style={{ borderColor: 'rgba(0,0,0,0.03)' }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.02)'}
             onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
             <div className="w-14 h-10 flex-shrink-0 overflow-hidden" style={{ background: '#1a1a1a', borderRadius: '2px' }}>
               {b.coverImage?.url && <img src={imgUrl(b.coverImage.url)} alt="" className="w-full h-full object-cover" />}
@@ -58,9 +58,9 @@ export default function AdminBlogs() {
                 {b.isFeatured && <span className="font-mono text-[0.44px] px-1.5 py-0.5 uppercase" style={{ color: 'var(--c-gold)', background: 'rgba(201,169,110,0.08)', borderRadius: '2px', fontSize: '0.44rem' }}>Featured</span>}
               </div>
               <div className="flex items-center gap-3">
-                {b.category?.name && <span className="font-mono text-[0.5rem] tracking-[0.12em] uppercase" style={{ color: 'rgba(245,240,234,0.3)' }}>{b.category.name}</span>}
-                <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(245,240,234,0.2)' }}>{b.createdAt ? format(new Date(b.createdAt), 'MMM d, yyyy') : ''}</span>
-                <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(245,240,234,0.2)' }}>{b.views || 0} views</span>
+                {b.category?.name && <span className="font-mono text-[0.5rem] tracking-[0.12em] uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>{b.category.name}</span>}
+                <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(255,255,255,0.25)' }}>{b.createdAt ? format(new Date(b.createdAt), 'MMM d, yyyy') : ''}</span>
+                <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(255,255,255,0.25)' }}>{b.views || 0} views</span>
               </div>
             </div>
             <div className="flex gap-1.5 flex-shrink-0">
@@ -94,7 +94,7 @@ export default function AdminBlogs() {
               {form.coverImage?.url && <img src={imgUrl(form.coverImage.url)} alt="" className="mt-2 h-20 w-full object-cover" style={{ borderRadius: '2px' }} />}
             </Field>
             <div>
-              <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(245,240,234,0.4)' }}>Tags</label>
+              <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>Tags</label>
               <div className="flex gap-2 mb-2">
                 <input value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())} placeholder="Add tag…" className="input-field flex-1 py-2 text-[0.8rem]" />
                 <button type="button" onClick={addTag} className="px-4 py-2 font-mono text-[0.55rem] border" style={{ borderColor: 'rgba(201,169,110,0.25)', color: 'var(--c-gold)', borderRadius: '2px' }}>Add</button>
@@ -120,3 +120,4 @@ export default function AdminBlogs() {
     </div>
   );
 }
+

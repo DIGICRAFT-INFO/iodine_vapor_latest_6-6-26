@@ -28,7 +28,7 @@ export default function PortfolioPage() {
             {CATS.map(cat => (
               <button key={cat} onClick={() => setFilter(cat)} data-hover
                 className="px-4 py-2 font-mono text-[0.54rem] tracking-[0.15em] uppercase capitalize transition-all"
-                style={{ borderRadius: '2px', background: filter === cat ? 'var(--c-gold)' : 'rgba(255,255,255,0.04)', color: filter === cat ? '#080808' : 'rgba(245,240,234,0.4)', border: `1px solid ${filter === cat ? 'var(--c-gold)' : 'rgba(255,255,255,0.08)'}` }}>
+                style={{ borderRadius: '2px', background: filter === cat ? 'var(--c-gold)' : 'rgba(0,0,0,0.03)', color: filter === cat ? '#080808' : 'rgba(0,0,0,0.5)', border: `1px solid ${filter === cat ? 'var(--c-gold)' : 'rgba(0,0,0,0.08)'}` }}>
                 {cat}
               </button>
             ))}
@@ -36,7 +36,7 @@ export default function PortfolioPage() {
 
           {/* Masonry Grid */}
           {items.length === 0 ? (
-            <div className="text-center py-24 font-mono text-[0.58rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.2)' }}>No items in this category</div>
+            <div className="text-center py-24 font-mono text-[0.58rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(0,0,0,0.2)' }}>No items in this category</div>
           ) : (
             <div style={{ columns: 'auto 3', columnGap: '16px' }}>
               {items.map((item: any) => (
@@ -50,7 +50,7 @@ export default function PortfolioPage() {
                     <h3 className="font-serif text-[0.95rem] text-cream-DEFAULT mb-1">{item.title}</h3>
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-[0.52rem] tracking-[0.15em] uppercase" style={{ color: 'var(--c-gold)' }}>{item.category}</span>
-                      {item.client && <span className="font-mono text-[0.48rem]" style={{ color: 'rgba(245,240,234,0.35)' }}>· {item.client}</span>}
+                      {item.client && <span className="font-mono text-[0.48rem]" style={{ color: 'rgba(0,0,0,0.4)' }}>· {item.client}</span>}
                     </div>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ export default function PortfolioPage() {
       {/* Lightbox */}
       {lightbox && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[2000] flex items-center justify-center p-10" style={{ background: 'rgba(8,8,8,0.97)', backdropFilter: 'blur(30px)' }} onClick={() => setLightbox(null)}>
-          <button className="absolute top-6 right-8 font-mono text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.4)' }}>Close ✕</button>
+          <button className="absolute top-6 right-8 font-mono text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(0,0,0,0.5)' }}>Close ✕</button>
           <img src={imgUrl(lightbox.imageUrl)} alt={lightbox.title} className="max-w-[90vw] max-h-[85vh] object-contain" style={{ borderRadius: '2px' }} onClick={e => e.stopPropagation()} />
           <div className="absolute bottom-8 left-10">
             <h3 className="font-serif text-[1.3rem] text-cream-DEFAULT">{lightbox.title}</h3>

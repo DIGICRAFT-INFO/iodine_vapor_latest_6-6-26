@@ -44,7 +44,7 @@ export default function AdminLogin() {
             <div className="font-display text-[2.4rem] tracking-[0.12em] text-cream-DEFAULT mb-2">
               Iodine<span style={{ color: 'var(--c-gold)' }}>.</span>Admin
             </div>
-            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase" style={{ color: 'rgba(245,240,234,0.3)' }}>
+            <p className="font-mono text-[0.58rem] tracking-[0.25em] uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>
               Secure Access Portal
             </p>
           </div>

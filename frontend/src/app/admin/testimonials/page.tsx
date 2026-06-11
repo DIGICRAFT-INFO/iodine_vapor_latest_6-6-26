@@ -31,8 +31,8 @@ export default function AdminTestimonials() {
       {isLoading ? (
         <div className="space-y-3">{Array.from({ length: 3 }).map((_, i) => <div key={i} className="h-20 shimmer" style={{ borderRadius: '2px' }} />)}</div>
       ) : testimonials.length === 0 ? (
-        <div className="text-center py-16 border" style={{ borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
-          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(245,240,234,0.2)' }}>No testimonials yet</p>
+        <div className="text-center py-16 border" style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
+          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>No testimonials yet</p>
           <AddBtn onClick={() => { setForm(empty()); setShowForm(true); }} label="Add First Testimonial" />
         </div>
       ) : (
@@ -40,22 +40,22 @@ export default function AdminTestimonials() {
           {testimonials.map((t: any) => (
             <motion.div key={t._id} layout
               className="flex items-start gap-4 px-5 py-4 border transition-all"
-              style={{ background: 'rgba(255,255,255,0.015)', borderColor: t.isActive ? 'rgba(201,169,110,0.12)' : 'rgba(255,255,255,0.05)', borderRadius: '2px' }}>
+              style={{ background: 'rgba(255,255,255,0.02)', borderColor: t.isActive ? 'rgba(201,169,110,0.12)' : 'rgba(0,0,0,0.06)', borderRadius: '2px' }}>
               {t.imageUrl && <img src={imgUrl(t.imageUrl)} alt={t.name} className="w-12 h-12 rounded-full object-cover flex-shrink-0" />}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <span className="text-[0.85rem] font-medium text-cream-DEFAULT">{t.name}</span>
                   {t.isFeatured && <span className="font-mono text-[0.44rem] tracking-[0.1em] uppercase px-1.5 py-0.5" style={{ background: 'rgba(201,169,110,0.1)', color: 'var(--c-gold)', borderRadius: '2px' }}>Featured</span>}
                   <span className={`font-mono text-[0.44rem] tracking-[0.1em] uppercase px-1.5 py-0.5`}
-                    style={{ background: t.isActive ? 'rgba(74,222,128,0.08)' : 'rgba(255,255,255,0.04)', color: t.isActive ? '#4ade80' : 'rgba(245,240,234,0.3)', borderRadius: '2px' }}>
+                    style={{ background: t.isActive ? 'rgba(74,222,128,0.08)' : 'rgba(0,0,0,0.03)', color: t.isActive ? '#4ade80' : 'rgba(0,0,0,0.35)', borderRadius: '2px' }}>
                     {t.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </div>
-                <p className="text-[0.7rem] mb-1" style={{ color: 'rgba(245,240,234,0.4)' }}>{t.role}{t.company && `, ${t.company}`}</p>
+                <p className="text-[0.7rem] mb-1" style={{ color: 'rgba(255,255,255,0.5)' }}>{t.role}{t.company && `, ${t.company}`}</p>
                 <div className="flex gap-0.5 mb-1">
-                  {Array.from({ length: 5 }).map((_, i) => <span key={i} style={{ color: i < t.rating ? 'var(--c-gold)' : 'rgba(255,255,255,0.1)', fontSize: '0.7rem' }}>★</span>)}
+                  {Array.from({ length: 5 }).map((_, i) => <span key={i} style={{ color: i < t.rating ? 'var(--c-gold)' : 'rgba(0,0,0,0.1)', fontSize: '0.7rem' }}>★</span>)}
                 </div>
-                <p className="text-[0.75rem] line-clamp-2" style={{ color: 'rgba(245,240,234,0.35)' }}>"{t.content}"</p>
+                <p className="text-[0.75rem] line-clamp-2" style={{ color: 'rgba(255,255,255,0.45)' }}>"{t.content}"</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button onClick={() => { setForm({ ...t }); setShowForm(true); }}
@@ -117,3 +117,4 @@ export default function AdminTestimonials() {
     </div>
   );
 }
+

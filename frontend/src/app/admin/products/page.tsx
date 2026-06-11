@@ -51,31 +51,31 @@ export default function AdminProducts() {
       </div>
 
       {/* Table */}
-      <div className="border" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+      <div className="border" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
         <div className="overflow-x-auto">
           <table className="w-full text-[0.8rem]">
             <thead>
-              <tr className="border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+              <tr className="border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
                 {['Product', 'Category', 'Price', 'Stock', 'Status', ''].map(h => (
-                  <th key={h} className="px-4 py-3 text-left font-mono text-[0.5rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.25)' }}>{h}</th>
+                  <th key={h} className="px-4 py-3 text-left font-mono text-[0.5rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.3)' }}>{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+            <tbody className="divide-y" style={{ borderColor: 'rgba(0,0,0,0.03)' }}>
               {isLoading ? Array.from({length:6}).map((_,i) => (
                 <tr key={i}><td colSpan={6} className="px-4 py-3"><div className="h-8 shimmer" style={{ borderRadius: '2px' }} /></td></tr>
               )) : products.length === 0 ? (
-                <tr><td colSpan={6} className="px-4 py-12 text-center font-mono text-[0.56rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.2)' }}>No products</td></tr>
+                <tr><td colSpan={6} className="px-4 py-12 text-center font-mono text-[0.56rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.25)' }}>No products</td></tr>
               ) : products.map((p: any) => (
-                <tr key={p._id} className="transition-colors" onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)'} onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
+                <tr key={p._id} className="transition-colors" onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.02)'} onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 flex-shrink-0 overflow-hidden" style={{ background: '#1a1a1a', borderRadius: '2px' }}>
-                        {p.images?.[0] ? <img src={imgUrl(p.images[0].url)} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center font-mono text-[0.6rem]" style={{ color: 'rgba(245,240,234,0.2)' }}>?</div>}
+                        {p.images?.[0] ? <img src={imgUrl(p.images[0].url)} alt={p.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center font-mono text-[0.6rem]" style={{ color: 'rgba(255,255,255,0.25)' }}>?</div>}
                       </div>
                       <div>
                         <p className="font-medium text-cream-DEFAULT">{p.name}</p>
-                        {p.sku && <p className="font-mono text-[0.5rem] tracking-[0.12em] uppercase" style={{ color: 'rgba(245,240,234,0.25)' }}>SKU: {p.sku}</p>}
+                        {p.sku && <p className="font-mono text-[0.5rem] tracking-[0.12em] uppercase" style={{ color: 'rgba(255,255,255,0.3)' }}>SKU: {p.sku}</p>}
                       </div>
                     </div>
                   </td>
@@ -83,8 +83,8 @@ export default function AdminProducts() {
                     <span className="font-mono text-[0.52rem] tracking-[0.12em] uppercase px-2 py-1" style={{ color: 'var(--c-gold)', background: 'rgba(201,169,110,0.08)', borderRadius: '2px' }}>{p.category?.name || '—'}</span>
                   </td>
                   <td className="px-4 py-3 text-cream-DEFAULT">
-                    {p.price ? `₹${p.price}` : <span style={{ color: 'rgba(245,240,234,0.3)' }}>Enquire</span>}
-                    {p.mrp > p.price && <span className="ml-1.5 text-[0.7rem] line-through" style={{ color: 'rgba(245,240,234,0.3)' }}>₹{p.mrp}</span>}
+                    {p.price ? `₹${p.price}` : <span style={{ color: 'rgba(255,255,255,0.4)' }}>Enquire</span>}
+                    {p.mrp > p.price && <span className="ml-1.5 text-[0.7rem] line-through" style={{ color: 'rgba(255,255,255,0.4)' }}>₹{p.mrp}</span>}
                   </td>
                   <td className="px-4 py-3"><StatusBadge status={p.inStock ? 'active' : 'inactive'} /></td>
                   <td className="px-4 py-3">
@@ -105,11 +105,11 @@ export default function AdminProducts() {
           </table>
         </div>
         {totalPages > 1 && (
-          <div className="px-4 py-3 border-t flex items-center justify-between" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-            <span className="font-mono text-[0.52rem]" style={{ color: 'rgba(245,240,234,0.25)' }}>Page {page}/{totalPages}</span>
+          <div className="px-4 py-3 border-t flex items-center justify-between" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+            <span className="font-mono text-[0.52rem]" style={{ color: 'rgba(255,255,255,0.3)' }}>Page {page}/{totalPages}</span>
             <div className="flex gap-2">
-              <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page===1} className="px-3 py-1 font-mono text-[0.52rem] border disabled:opacity-30" style={{ borderColor: 'rgba(255,255,255,0.08)', borderRadius: '2px', color: 'rgba(245,240,234,0.4)' }}>Prev</button>
-              <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page===totalPages} className="px-3 py-1 font-mono text-[0.52rem] border disabled:opacity-30" style={{ borderColor: 'rgba(255,255,255,0.08)', borderRadius: '2px', color: 'rgba(245,240,234,0.4)' }}>Next</button>
+              <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page===1} className="px-3 py-1 font-mono text-[0.52rem] border disabled:opacity-30" style={{ borderColor: 'rgba(255,255,255,0.08)', borderRadius: '2px', color: 'rgba(255,255,255,0.5)' }}>Prev</button>
+              <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page===totalPages} className="px-3 py-1 font-mono text-[0.52rem] border disabled:opacity-30" style={{ borderColor: 'rgba(255,255,255,0.08)', borderRadius: '2px', color: 'rgba(255,255,255,0.5)' }}>Next</button>
             </div>
           </div>
         )}
@@ -147,7 +147,7 @@ export default function AdminProducts() {
             {/* Images */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="font-mono text-[0.52rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.4)' }}>Images</label>
+                <label className="font-mono text-[0.52rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.5)' }}>Images</label>
                 <button type="button" onClick={() => setShowMedia(true)} className="font-mono text-[0.52rem] tracking-[0.12em] uppercase" style={{ color: 'var(--c-gold)' }}>+ Add Image</button>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -159,13 +159,13 @@ export default function AdminProducts() {
                       style={{ background: 'rgba(214,58,47,0.8)', color: 'white' }}>✕</button>
                   </div>
                 ))}
-                {!form.images?.length && <div className="w-16 h-16 flex items-center justify-center border" style={{ borderColor: 'rgba(255,255,255,0.08)', borderRadius: '2px', color: 'rgba(245,240,234,0.2)', fontSize: '1.2rem' }}>+</div>}
+                {!form.images?.length && <div className="w-16 h-16 flex items-center justify-center border" style={{ borderColor: 'rgba(255,255,255,0.08)', borderRadius: '2px', color: 'rgba(255,255,255,0.25)', fontSize: '1.2rem' }}>+</div>}
               </div>
             </div>
 
             {/* Tags */}
             <div>
-              <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(245,240,234,0.4)' }}>Tags</label>
+              <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>Tags</label>
               <div className="flex gap-2 mb-2">
                 <input value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())} placeholder="Add tag…" className="input-field flex-1 py-2 text-[0.8rem]" />
                 <button type="button" onClick={addTag} className="px-4 py-2 font-mono text-[0.55rem] border" style={{ borderColor: 'rgba(201,169,110,0.25)', color: 'var(--c-gold)', borderRadius: '2px' }}>Add</button>
@@ -181,7 +181,7 @@ export default function AdminProducts() {
 
             {/* Specs */}
             <div>
-              <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(245,240,234,0.4)' }}>Specifications</label>
+              <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>Specifications</label>
               <div className="flex gap-2 mb-2">
                 <input value={specKey} onChange={e => setSpecKey(e.target.value)} placeholder="Key (e.g. Volume)" className="input-field flex-1 py-2 text-[0.8rem]" />
                 <input value={specVal} onChange={e => setSpecVal(e.target.value)} placeholder="Value (e.g. 500ml)" className="input-field flex-1 py-2 text-[0.8rem]" />
@@ -190,7 +190,7 @@ export default function AdminProducts() {
               <div className="space-y-1.5">
                 {(form.specifications || []).map((s: any, i: number) => (
                   <div key={i} className="flex items-center gap-3 px-3 py-2 text-[0.78rem]" style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '2px' }}>
-                    <span style={{ color: 'rgba(245,240,234,0.4)' }}>{s.key}:</span>
+                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>{s.key}:</span>
                     <span className="text-cream-DEFAULT">{s.value}</span>
                     <button type="button" onClick={() => up('specifications', form.specifications.filter((_: any, j: number) => j !== i))} className="ml-auto font-mono text-[0.5rem]" style={{ color: '#d63a2f' }}>✕</button>
                   </div>
@@ -199,8 +199,8 @@ export default function AdminProducts() {
             </div>
 
             {/* SEO */}
-            <div className="border p-4 space-y-3" style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
-              <p className="font-mono text-[0.52rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.35)' }}>SEO</p>
+            <div className="border p-4 space-y-3" style={{ borderColor: 'rgba(255,255,255,0.08)', borderRadius: '2px' }}>
+              <p className="font-mono text-[0.52rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.45)' }}>SEO</p>
               <input value={form.seo?.metaTitle || ''} onChange={e => up('seo', { ...form.seo, metaTitle: e.target.value })} placeholder="Meta Title" className="input-field text-[0.8rem]" />
               <textarea value={form.seo?.metaDescription || ''} onChange={e => up('seo', { ...form.seo, metaDescription: e.target.value })} placeholder="Meta Description" rows={2} className="input-field resize-none text-[0.8rem]" />
             </div>
@@ -225,3 +225,4 @@ export default function AdminProducts() {
     </div>
   );
 }
+

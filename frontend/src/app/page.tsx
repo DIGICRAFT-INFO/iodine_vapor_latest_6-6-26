@@ -127,33 +127,48 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* BG - Desktop: side-by-side panels | Mobile: single carousel slide */}
+      {/* BG - Desktop: side-by-side panels (max 3) with vertical auto-slide | Mobile: single carousel */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
-        {/* Desktop: Multiple panels side by side */}
+        {/* Desktop: Max 3 panels, extra slides cycle vertically within panels */}
         <div className="hidden md:flex absolute inset-0">
-          {slides.map((s: any, i: number) => (
-            <div
-              key={s._id || i}
-              className="flex-1 relative overflow-hidden"
-              style={{ transition: 'flex 0.6s ease' }}
-            >
-              {s.imageUrl ? (
-                <img
-                  src={imgUrl(s.imageUrl)}
-                  alt=""
-                  className="w-full h-full object-cover"
-                  style={{ filter: 'grayscale(20%) contrast(1.05)', transition: 'transform 0.8s, filter 0.8s' }}
-                  onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'scale(1.05)'; (e.target as HTMLImageElement).style.filter = 'grayscale(0%) contrast(1.1)'; }}
-                  onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'scale(1)'; (e.target as HTMLImageElement).style.filter = 'grayscale(20%) contrast(1.05)'; }}
-                />
-              ) : (
-                <div className="w-full h-full" style={{ background: s.bgGradient || s.bgColor || 'linear-gradient(135deg, #080808 0%, #141414 100%)' }} />
-              )}
-              <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, rgba(8,8,8,${s.overlayOpacity ?? 0.3}) 0%, rgba(8,8,8,${Math.min((s.overlayOpacity ?? 0.3) + 0.4, 0.9)}) 100%)` }} />
-              {/* Panel number */}
-              <span className="absolute top-6 left-4 font-mono text-[0.6rem] tracking-[0.15em]" style={{ color: 'rgba(245,240,234,0.35)' }}>0{i + 1}</span>
-            </div>
-          ))}
+          {Array.from({ length: Math.min(slides.length, 3) }).map((_, panelIdx) => {
+            // Distribute slides across panels (panel 0 gets slide 0,3,6... panel 1 gets 1,4,7... etc.)
+            const panelSlides = slides.filter((_: any, si: number) => si % Math.min(slides.length, 3) === panelIdx);
+            const activeSlideIdx = Math.floor(current / Math.min(slides.length, 3)) % panelSlides.length;
+            const s = panelSlides[slides.length <= 3 ? 0 : activeSlideIdx];
+            return (
+              <div
+                key={panelIdx}
+                className="flex-1 relative overflow-hidden"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={s?._id || panelIdx}
+                    initial={slides.length > 3 ? { opacity: 0, y: 20 } : { opacity: 1 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={slides.length > 3 ? { opacity: 0, y: -20 } : undefined}
+                    transition={{ duration: 0.6 }}
+                    className="absolute inset-0"
+                  >
+                    {s?.imageUrl ? (
+                      <img
+                        src={imgUrl(s.imageUrl)}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        style={{ filter: 'grayscale(20%) contrast(1.05)', transition: 'transform 0.8s, filter 0.8s' }}
+                        onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'scale(1.05)'; (e.target as HTMLImageElement).style.filter = 'grayscale(0%) contrast(1.1)'; }}
+                        onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'scale(1)'; (e.target as HTMLImageElement).style.filter = 'grayscale(20%) contrast(1.05)'; }}
+                      />
+                    ) : (
+                      <div className="w-full h-full" style={{ background: s?.bgGradient || s?.bgColor || '#f5f5f5' }} />
+                    )}
+                    <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, rgba(0,0,0,${s?.overlayOpacity ?? 0.3}) 0%, rgba(0,0,0,${Math.min((s?.overlayOpacity ?? 0.3) + 0.4, 0.9)}) 100%)` }} />
+                  </motion.div>
+                </AnimatePresence>
+                <span className="absolute top-6 left-4 font-mono text-[0.6rem] tracking-[0.15em] z-10" style={{ color: 'rgba(255,255,255,0.5)' }}>0{panelIdx + 1}</span>
+              </div>
+            );
+          })}
         </div>
 
         {/* Mobile: Single slide carousel */}
@@ -166,7 +181,7 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.6 }}
               className="absolute inset-0"
-              style={{ background: slide?.bgGradient || slide?.bgColor || 'linear-gradient(135deg, #080808 0%, #141414 100%)' }}
+              style={{ background: slide?.bgGradient || slide?.bgColor || 'linear-gradient(135deg, #080808 0%, #f5f5f5 100%)' }}
             >
               {slide?.imageUrl && (
                 <>
@@ -176,7 +191,7 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
                     className="w-full h-full object-cover"
                     style={{ filter: 'grayscale(20%) contrast(1.05)' }}
                   />
-                  <div className="absolute inset-0" style={{ background: `rgba(8,8,8,${slide.overlayOpacity ?? 0.5})` }} />
+                  <div className="absolute inset-0" style={{ background: `rgba(0,0,0,${slide.overlayOpacity ?? 0.5})` }} />
                 </>
               )}
             </motion.div>
@@ -219,7 +234,7 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
                 ...tStyle(slide.title),
                 fontSize: slide.title.fontSize || 'clamp(2.5rem, 7vw, 5rem)',
                 fontFamily: slide.title.fontFamily || 'Bebas Neue, sans-serif',
-                color: slide.title.color || '#f5f0ea',
+                color: slide.title.color || '#1a1a2e',
               }}
             >
               {slide.title.text}
@@ -255,7 +270,7 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.9, duration: 0.8 }}
             className="mb-6 max-w-lg"
-            style={{ ...tStyle(slide.paragraph), fontSize: slide.paragraph.fontSize || '0.9rem', color: slide.paragraph.color || 'rgba(245,240,234,0.5)' }}
+            style={{ ...tStyle(slide.paragraph), fontSize: slide.paragraph.fontSize || '0.9rem', color: slide.paragraph.color || 'rgba(0,0,0,0.55)' }}
           >
             {slide.paragraph.text}
           </motion.p>
@@ -276,30 +291,30 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.2, duration: 0.8 }}
-            className="flex flex-wrap items-center gap-6 md:gap-12 mt-8"
+            className="flex flex-wrap items-center gap-6 md:gap-10 mt-8"
           >
             {settings?.years_experience && (
               <div className="flex flex-col gap-1">
-                <span className="font-mono text-[0.52rem] tracking-[0.25em] uppercase" style={{ color: 'var(--c-muted)' }}>Experience</span>
-                <span className="font-sans font-bold text-[0.95rem] text-cream-DEFAULT">{settings.years_experience}</span>
+                <span className="font-display text-[1.5rem] md:text-[2rem] leading-none" style={{ color: '#e91e8c' }}>{settings.years_experience}</span>
+                <span className="text-[0.65rem] md:text-[0.72rem] font-semibold tracking-[0.1em] uppercase" style={{ color: 'rgba(255,255,255,0.7)' }}>Experience</span>
               </div>
             )}
             {settings?.projects_count && (
               <div className="flex flex-col gap-1">
-                <span className="font-mono text-[0.52rem] tracking-[0.25em] uppercase" style={{ color: 'var(--c-muted)' }}>Projects</span>
-                <span className="font-sans font-bold text-[0.95rem] text-cream-DEFAULT">{settings.projects_count}</span>
+                <span className="font-display text-[1.5rem] md:text-[2rem] leading-none" style={{ color: '#e91e8c' }}>{settings.projects_count}</span>
+                <span className="text-[0.65rem] md:text-[0.72rem] font-semibold tracking-[0.1em] uppercase" style={{ color: 'rgba(255,255,255,0.7)' }}>Projects</span>
               </div>
             )}
             {settings?.schools_count && (
               <div className="flex flex-col gap-1">
-                <span className="font-mono text-[0.52rem] tracking-[0.25em] uppercase" style={{ color: 'var(--c-muted)' }}>Schools Covered</span>
-                <span className="font-sans font-bold text-[0.95rem] text-cream-DEFAULT">{settings.schools_count}</span>
+                <span className="font-display text-[1.5rem] md:text-[2rem] leading-none" style={{ color: '#e91e8c' }}>{settings.schools_count}</span>
+                <span className="text-[0.65rem] md:text-[0.72rem] font-semibold tracking-[0.1em] uppercase" style={{ color: 'rgba(255,255,255,0.7)' }}>Schools</span>
               </div>
             )}
             {settings?.cinemas_count && (
               <div className="flex flex-col gap-1">
-                <span className="font-mono text-[0.52rem] tracking-[0.25em] uppercase" style={{ color: 'var(--c-muted)' }}>INOX-PVR Cinemas</span>
-                <span className="font-sans font-bold text-[0.95rem] text-cream-DEFAULT">{settings.cinemas_count}</span>
+                <span className="font-display text-[1.5rem] md:text-[2rem] leading-none" style={{ color: '#e91e8c' }}>{settings.cinemas_count}</span>
+                <span className="text-[0.65rem] md:text-[0.72rem] font-semibold tracking-[0.1em] uppercase" style={{ color: 'rgba(255,255,255,0.7)' }}>Cinemas</span>
               </div>
             )}
           </motion.div>
@@ -314,7 +329,7 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
               className="transition-all duration-300"
               style={{ width: i === current ? '24px' : '8px', height: '8px', minWidth: '44px', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent' }}
             >
-              <span style={{ width: i === current ? '24px' : '6px', height: '6px', borderRadius: '3px', background: i === current ? 'var(--c-gold)' : 'rgba(245,240,234,0.3)', display: 'block' }} />
+              <span style={{ width: i === current ? '24px' : '6px', height: '6px', borderRadius: '3px', background: i === current ? 'var(--c-gold)' : 'rgba(0,0,0,0.35)', display: 'block' }} />
             </button>
           ))}
         </div>
@@ -327,17 +342,17 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
         transition={{ delay: 2.5 }}
         className="absolute right-4 md:right-12 bottom-20 flex flex-col items-center gap-3"
       >
-        <span className="font-mono text-[0.52rem] tracking-[0.25em] uppercase" style={{ color: 'rgba(245,240,234,0.35)', writingMode: 'vertical-rl' }}>Scroll</span>
+        <span className="font-mono text-[0.52rem] tracking-[0.25em] uppercase" style={{ color: 'rgba(0,0,0,0.4)', writingMode: 'vertical-rl' }}>Scroll</span>
         <div className="w-px h-16" style={{ background: 'linear-gradient(180deg, var(--c-gold), transparent)', animation: 'lineGrow 2s ease-in-out infinite' }} />
       </motion.div>
 
       {/* Ticker from services API */}
       {tickerItems && tickerItems.length > 0 && (
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t py-2.5" style={{ background: 'rgba(8,8,8,0.6)', backdropFilter: 'blur(8px)', borderColor: 'rgba(255,255,255,0.05)' }}>
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t py-3" style={{ background: 'linear-gradient(90deg, #1a1a2e, #3a2067, #e91e8c, #3a7bd5, #1a1a2e)', borderColor: 'transparent' }}>
           <div className="ticker-track flex gap-0 whitespace-nowrap">
             {[...tickerItems, ...tickerItems].map((item: string, i: number) => (
-              <span key={i} className="inline-flex items-center gap-6 px-8 font-mono text-[0.58rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.3)' }}>
-                {item}<span style={{ color: 'var(--c-gold)' }}>✦</span>
+              <span key={i} className="inline-flex items-center gap-6 px-8 font-mono text-[0.58rem] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(255,255,255,0.9)' }}>
+                {item}<span style={{ color: '#ffffff' }}>✦</span>
               </span>
             ))}
           </div>
@@ -373,11 +388,11 @@ function Reel({ portfolio }: { portfolio: any[] }) {
         <div>
           <div className="section-label">Featured Work</div>
           <h2 className="font-display text-cream-DEFAULT leading-[0.9]" style={{ fontSize: 'clamp(3.5rem, 7vw, 8rem)' }}>
-            Selected<br /><em className="font-serif not-italic" style={{ color: 'var(--c-gold)' }}>Projects</em>
+            <span className="word-motion">SELECTED</span><br /><em className="font-serif not-italic word-motion" style={{ color: 'var(--c-gold)' }}>PROJECTS</em>
           </h2>
         </div>
         <div className="hidden md:block">
-          <p className="text-[0.82rem] leading-[1.7] mb-4 max-w-[260px]" style={{ color: 'rgba(245,240,234,0.4)' }}>
+          <p className="text-[0.82rem] leading-[1.7] mb-4 max-w-[260px]" style={{ color: 'rgba(0,0,0,0.5)' }}>
             Crafted visuals for India's most recognisable brands.
           </p>
           <Link href="/portfolio" className="btn-ghost py-3 px-6 text-[0.6rem]" data-hover>View All Works →</Link>
@@ -405,14 +420,14 @@ function Reel({ portfolio }: { portfolio: any[] }) {
                 onMouseLeave={e => (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'}
                 onClick={() => item.slug && (window.location.href = `/portfolio`)}
               >
-                <span className="absolute top-4 left-4 z-10 font-mono text-[0.52rem] tracking-[0.18em] uppercase px-2.5 py-1" style={{ background: 'rgba(8,8,8,0.7)', border: '1px solid rgba(245,240,234,0.12)', color: 'rgba(245,240,234,0.55)', borderRadius: '2px' }}>
+                <span className="absolute top-4 left-4 z-10 font-mono text-[0.52rem] tracking-[0.18em] uppercase px-2.5 py-1" style={{ background: 'rgba(255,255,255,0.85)', border: '1px solid rgba(0,0,0,0.1)', color: 'rgba(0,0,0,0.6)', borderRadius: '2px' }}>
                   {item.category}
                 </span>
                 <img src={imgUrl(item.imageUrl)} alt={item.title} className="w-full h-full object-cover" style={{ filter: 'grayscale(25%) contrast(1.05)', transition: 'transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.5s' }}
                   onMouseEnter={e => { (e.target as HTMLImageElement).style.transform = 'scale(1.06)'; (e.target as HTMLImageElement).style.filter = 'grayscale(0%) contrast(1.1)'; }}
                   onMouseLeave={e => { (e.target as HTMLImageElement).style.transform = 'scale(1)'; (e.target as HTMLImageElement).style.filter = 'grayscale(25%) contrast(1.05)'; }}
                 />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(0deg, rgba(8,8,8,0.88) 0%, rgba(8,8,8,0.08) 60%)' }} />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(0deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.08) 60%)' }} />
                 <div className="absolute bottom-6 left-6 right-6 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                   <h3 className="font-serif text-[1.1rem] text-cream-DEFAULT mb-1">{item.title}</h3>
                   <span className="font-mono text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'var(--c-gold)' }}>{item.category}</span>
@@ -486,13 +501,13 @@ function AboutSection({ settings }: { settings: any }) {
           <div ref={rightRef} className={`reveal-right ${rightIn ? 'visible' : ''}`}>
             <div className="section-label">Our Story</div>
             <h2 className="font-display text-cream-DEFAULT leading-[0.92] mb-8" style={{ fontSize: 'clamp(3rem, 5vw, 6rem)' }}>
-              WE MAKE<br />
-              <span style={{ color: 'transparent', WebkitTextStroke: '1px rgba(245,240,234,0.2)' }}>BRANDS</span><br />
-              VISIBLE.
+              <span className="word-motion">WE</span> <span className="word-motion">MAKE</span><br />
+              <span className="word-motion" style={{ color: '#e91e8c' }}>BRANDS</span><br />
+              <span className="word-motion">VISIBLE.</span>
             </h2>
 
             {aboutText && (
-              <p className="text-[0.93rem] leading-[1.88] mb-8 max-w-[420px]" style={{ color: 'rgba(245,240,234,0.5)' }}>
+              <p className="text-[0.93rem] leading-[1.88] mb-8 max-w-[420px]" style={{ color: 'rgba(0,0,0,0.55)' }}>
                 {aboutText}
               </p>
             )}
@@ -515,9 +530,9 @@ function AboutSection({ settings }: { settings: any }) {
             {clients.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-10">
                 {clients.map((c: string) => (
-                  <span key={c} className="font-mono text-[0.55rem] tracking-[0.15em] uppercase px-3 py-1.5 border transition-all duration-300" style={{ borderColor: 'rgba(255,255,255,0.07)', color: 'rgba(245,240,234,0.35)', borderRadius: '2px', cursor: 'default' }}
+                  <span key={c} className="font-mono text-[0.55rem] tracking-[0.15em] uppercase px-3 py-1.5 border transition-all duration-300" style={{ borderColor: 'rgba(0,0,0,0.08)', color: 'rgba(0,0,0,0.4)', borderRadius: '2px', cursor: 'default' }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--c-gold)'; (e.currentTarget as HTMLElement).style.color = 'var(--c-gold)'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.07)'; (e.currentTarget as HTMLElement).style.color = 'rgba(245,240,234,0.35)'; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,0,0,0.08)'; (e.currentTarget as HTMLElement).style.color = 'rgba(0,0,0,0.4)'; }}
                   >{c}</span>
                 ))}
               </div>
@@ -544,12 +559,12 @@ function Marquee({ services }: { services: any[] }) {
   if (!words || words.length === 0) return null;
 
   return (
-    <div className="py-8 overflow-hidden border-y" style={{ background: 'var(--c-bg)', borderColor: 'rgba(255,255,255,0.06)' }}>
+    <div className="py-6 overflow-hidden" style={{ background: 'linear-gradient(90deg, #1a1a2e, #3a2067, #e91e8c, #3a7bd5, #1a1a2e)' }}>
       <div className="marquee-track flex gap-0 whitespace-nowrap">
         {[...words, ...words].map((w: string, i: number) => (
           <span key={i} className="inline-flex items-center gap-8 px-8">
-            <span className="font-display text-[2.2rem] outline-text tracking-[0.05em] uppercase">{w}</span>
-            {i !== words.length * 2 - 1 && <span style={{ color: 'var(--c-gold)', fontSize: '0.8rem' }}>✦</span>}
+            <span className="font-display text-[2.2rem] tracking-[0.05em] uppercase" style={{ color: 'rgba(255,255,255,0.9)' }}>{w}</span>
+            {i !== words.length * 2 - 1 && <span style={{ color: '#ffffff', fontSize: '0.8rem' }}>✦</span>}
           </span>
         ))}
       </div>
@@ -570,26 +585,41 @@ function Services({ services }: { services: any[] }) {
         <div ref={ref} className={`mb-16 reveal ${inView ? 'visible' : ''}`}>
           <div className="section-label">What We Do</div>
           <h2 className="font-display text-cream-DEFAULT leading-[0.88]" style={{ fontSize: 'clamp(4rem, 8vw, 10rem)' }}>
-            OUR<br /><span className="outline-text">SERVICES</span>
+            <span className="word-motion">OUR</span><br /><span className="outline-text word-motion">SERVICES</span>
           </h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.08)' }}>
           {services.map((svc: any, i: number) => (
-            <div key={svc._id} className="service-card group" data-hover>
-              <div className="font-display text-[4rem] leading-none mb-6" style={{ color: 'rgba(255,255,255,0.04)', transition: 'color 0.3s' }}
-                onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'rgba(201,169,110,0.12)'}
-                onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.04)'}>
-                {String(i + 1).padStart(2, '0')}
+            <div key={svc._id} className="service-card group relative overflow-hidden" data-hover>
+              {/* Background Image - always visible */}
+              {svc.imageUrl && (
+                <div className="absolute inset-0">
+                  <img src={imgUrl(svc.imageUrl)} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.92) 100%)' }} />
+                </div>
+              )}
+              <div className="relative z-10">
+                <div className="font-display text-[4rem] leading-none mb-6" style={{ color: 'rgba(0,0,0,0.05)' }}>
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <div className="w-11 h-11 mb-6 flex items-center justify-center border text-[1.2rem] transition-all duration-300" style={{ border: '1px solid rgba(0,0,0,0.08)', borderRadius: '2px' }}>
+                  {svc.icon || '📷'}
+                </div>
+                <h3 className="font-serif text-[1.4rem] text-cream-DEFAULT mb-3">{svc.name}</h3>
+                <p className="text-[0.8rem] leading-[1.8] mb-4" style={{ color: 'rgba(0,0,0,0.45)' }}>{svc.shortDesc}</p>
+                {svc.features?.length > 0 && (
+                  <ul className="mb-4 space-y-1">
+                    {svc.features.slice(0, 3).map((f: string, fi: number) => (
+                      <li key={fi} className="text-[0.72rem] flex items-center gap-2" style={{ color: 'rgba(0,0,0,0.4)' }}>
+                        <span style={{ color: '#e91e8c' }}>•</span> {f}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <Link href="/contact" className="text-[0.65rem] tracking-[0.1em] uppercase flex items-center gap-2 font-semibold transition-all hover:gap-4" style={{ color: '#e91e8c' }}>
+                  Enquire Now →
+                </Link>
               </div>
-              <div className="w-11 h-11 mb-6 flex items-center justify-center border text-[1.2rem] transition-all duration-300" style={{ border: '1px solid rgba(255,255,255,0.07)', borderRadius: '2px' }}>
-                {svc.icon || '📷'}
-              </div>
-              <h3 className="font-serif text-[1.4rem] text-cream-DEFAULT mb-3">{svc.name}</h3>
-              <p className="text-[0.8rem] leading-[1.8] mb-6" style={{ color: 'rgba(245,240,234,0.38)' }}>{svc.shortDesc}</p>
-              <Link href="/services" className="font-mono text-[0.56rem] tracking-[0.2em] uppercase flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300" style={{ color: 'var(--c-gold)', transform: 'translateY(8px)' }}
-                data-hover>
-                Enquire Now →
-              </Link>
             </div>
           ))}
         </div>
@@ -610,15 +640,15 @@ function PortfolioGrid({ portfolio }: { portfolio: any[] }) {
   const filtered = filter === 'all' ? portfolio : portfolio.filter((p: any) => p.category === filter);
 
   return (
-    <section className="py-[140px] px-4 md:px-6 lg:px-12" style={{ background: 'var(--c-bg2)' }}>
+    <section className="py-[140px] px-4 md:px-6 lg:px-12" style={{ background: 'rgba(230, 120, 180, 0.3)' }}>
       <div className="max-w-[1400px] mx-auto">
         <div ref={ref} className={`mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 reveal ${inView ? 'visible' : ''}`}>
-          <h2 className="font-display text-cream-DEFAULT leading-[0.88]" style={{ fontSize: 'clamp(3rem, 6vw, 7rem)' }}>Our<br />Portfolio</h2>
+          <h2 className="font-display text-cream-DEFAULT leading-[0.88] uppercase" style={{ fontSize: 'clamp(3rem, 6vw, 7rem)' }}>OUR<br />PORTFOLIO</h2>
           <div className="flex flex-wrap gap-2">
             {CATS.map(cat => (
               <button key={cat} onClick={() => setFilter(cat)} data-hover
                 className="font-mono text-[0.56rem] tracking-[0.18em] uppercase px-4 py-2 border transition-all duration-200"
-                style={{ borderColor: filter === cat ? 'var(--c-gold)' : 'rgba(255,255,255,0.07)', color: filter === cat ? 'var(--c-gold)' : 'rgba(245,240,234,0.35)', background: filter === cat ? 'rgba(201,169,110,0.06)' : 'transparent', borderRadius: '2px' }}>
+                style={{ borderColor: filter === cat ? 'var(--c-gold)' : 'rgba(0, 0, 0, 0.91)', color: filter === cat ? 'var(--c-gold)' : 'rgba(0,0,0,0.4)', background: filter === cat ? 'rgba(23, 19, 13, 0.06)' : 'transparent', borderRadius: '2px' }}>
                 {cat}
               </button>
             ))}
@@ -634,15 +664,15 @@ function PortfolioGrid({ portfolio }: { portfolio: any[] }) {
                 <h3 className="font-serif text-[1rem] text-cream-DEFAULT mb-1">{item.title}</h3>
                 <span className="font-mono text-[0.52rem] tracking-[0.18em] uppercase" style={{ color: 'var(--c-gold)' }}>{item.category}</span>
               </div>
-              <div className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all" style={{ background: 'rgba(245,240,234,0.1)', border: '1px solid rgba(245,240,234,0.15)', backdropFilter: 'blur(8px)' }}>⊕</div>
+              <div className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all" style={{ background: 'rgba(245,240,234,0.1)', border: '1px solid rgba(0,0,0,0.12)', backdropFilter: 'blur(8px)' }}>⊕</div>
             </div>
           ))}
         </div>
 
         {/* Lightbox */}
         {lightbox && (
-          <div className="fixed inset-0 z-[2000] flex items-center justify-center p-10" style={{ background: 'rgba(8,8,8,0.97)', backdropFilter: 'blur(30px)' }} onClick={() => setLightbox(null)}>
-            <button className="absolute top-6 right-8 font-mono text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.4)' }} onClick={() => setLightbox(null)}>Close ✕</button>
+          <div className="fixed inset-0 z-[2000] flex items-center justify-center p-10" style={{ background: 'rgba(0,0,0,0.97)', backdropFilter: 'blur(30px)' }} onClick={() => setLightbox(null)}>
+            <button className="absolute top-6 right-8 font-mono text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(0,0,0,0.5)' }} onClick={() => setLightbox(null)}>Close ✕</button>
             <img src={imgUrl(lightbox.imageUrl)} alt={lightbox.title} className="max-w-[90vw] max-h-[85vh] object-contain" style={{ borderRadius: '2px' }} onClick={e => e.stopPropagation()} />
             <div className="absolute bottom-8 left-10">
               <h3 className="font-serif text-[1.3rem] text-cream-DEFAULT">{lightbox.title}</h3>
@@ -666,7 +696,7 @@ function WorkshopsSection({ workshops }: { workshops: any[] }) {
   if (!workshops?.length) return null;
 
   return (
-    <section className="py-[140px] px-4 md:px-6 lg:px-12" style={{ background: '#141414' }}>
+    <section className="py-[140px] px-4 md:px-6 lg:px-12" style={{ background: '#f5f5f5' }}>
       <div className="max-w-[1400px] mx-auto">
         <div ref={ref} className={`mb-12 reveal ${inView ? 'visible' : ''}`}>
           <div className="section-label">Learn & Grow</div>
@@ -676,7 +706,7 @@ function WorkshopsSection({ workshops }: { workshops: any[] }) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {workshops.slice(0, 3).map((w: any) => (
-            <Link key={w._id} href={`/workshops/${w.slug}`} className="group border transition-all duration-400 hover:-translate-y-1.5" style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }} data-hover>
+            <Link key={w._id} href={`/workshops/${w.slug}`} className="group border transition-all duration-400 hover:-translate-y-1.5" style={{ borderColor: 'rgba(0,0,0,0.08)', borderRadius: '2px' }} data-hover>
               {w.coverImage?.url && (
                 <div className="overflow-hidden" style={{ aspectRatio: '16/9' }}>
                   <img src={imgUrl(w.coverImage.url)} alt={w.title} className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.04]" style={{ filter: 'grayscale(25%)', transition: 'transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.4s' }}
@@ -688,7 +718,7 @@ function WorkshopsSection({ workshops }: { workshops: any[] }) {
               <div className="p-6">
                 {w.date && <div className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-3 flex items-center gap-2" style={{ color: 'var(--c-gold)' }}><span className="w-4 h-px bg-gold-DEFAULT inline-block" />{new Date(w.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</div>}
                 <h3 className="font-serif text-[1.2rem] text-cream-DEFAULT mb-2 leading-[1.3]">{w.title}</h3>
-                <p className="text-[0.78rem] leading-[1.7] mb-5" style={{ color: 'rgba(245,240,234,0.38)' }}>{w.description?.slice(0, 100)}...</p>
+                <p className="text-[0.78rem] leading-[1.7] mb-5" style={{ color: 'rgba(0,0,0,0.45)' }}>{w.description?.slice(0, 100)}...</p>
                 <div className="flex items-center justify-between">
                   <span className="font-display text-[1.7rem] text-cream-DEFAULT">{w.isFree ? 'Free' : `₹${w.price}`}</span>
                   <span className="font-mono text-[0.56rem] tracking-[0.18em] uppercase px-4 py-2 border transition-all duration-200" style={{ borderColor: 'rgba(201,169,110,0.3)', color: 'var(--c-gold)', borderRadius: '2px' }}>Register →</span>
@@ -720,7 +750,7 @@ function BlogSection({ blogs }: { blogs: any[] }) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {blogs.slice(0, 3).map((b: any, i: number) => (
-            <Link key={b._id} href={`/blog/${b.slug}`} className={`group border overflow-hidden transition-all duration-300 hover:-translate-y-1.5 ${i === 0 ? 'md:col-span-2' : ''}`} style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }} data-hover>
+            <Link key={b._id} href={`/blog/${b.slug}`} className={`group border overflow-hidden transition-all duration-300 hover:-translate-y-1.5 ${i === 0 ? 'md:col-span-2' : ''}`} style={{ borderColor: 'rgba(0,0,0,0.08)', borderRadius: '2px' }} data-hover>
               <div className="overflow-hidden" style={{ height: i === 0 ? '320px' : '210px' }}>
                 {b.coverImage?.url ? (
                   <img src={imgUrl(b.coverImage.url)} alt={b.title} className="w-full h-full object-cover" style={{ filter: 'grayscale(20%)', transition: 'transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.5s' }}
@@ -732,7 +762,7 @@ function BlogSection({ blogs }: { blogs: any[] }) {
               <div className="p-5">
                 <div className="font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'var(--c-gold)' }}>{b.category?.name || 'Photography'}</div>
                 <h3 className="font-serif text-cream-DEFAULT mb-2 leading-[1.35]" style={{ fontSize: i === 0 ? '1.3rem' : '1rem' }}>{b.title}</h3>
-                {i === 0 && b.excerpt && <p className="text-[0.78rem] leading-[1.7] mb-3" style={{ color: 'rgba(245,240,234,0.38)' }}>{b.excerpt}</p>}
+                {i === 0 && b.excerpt && <p className="text-[0.78rem] leading-[1.7] mb-3" style={{ color: 'rgba(0,0,0,0.45)' }}>{b.excerpt}</p>}
                 <span className="font-mono text-[0.52rem] tracking-[0.15em] uppercase" style={{ color: 'var(--c-gold)' }}>Read →</span>
               </div>
             </Link>
@@ -782,14 +812,14 @@ function ContactSection({ settings, services }: { settings: any; services: any[]
             <h2 className="font-display text-cream-DEFAULT leading-[0.88] mb-8" style={{ fontSize: 'clamp(3rem, 5vw, 6rem)' }}>
               START YOUR<br /><span style={{ color: 'var(--c-gold)' }}>PROJECT</span><br />TODAY.
             </h2>
-            <p className="text-[0.88rem] leading-[1.8] mb-10 max-w-[380px]" style={{ color: 'rgba(245,240,234,0.42)' }}>
+            <p className="text-[0.88rem] leading-[1.8] mb-10 max-w-[380px]" style={{ color: 'rgba(0,0,0,0.5)' }}>
               Ready to create visuals that truly represent your brand? GST & MSME registered. Pan-India services.
             </p>
             {contactItems.length > 0 && (
               <div className="flex flex-col gap-5">
                 {contactItems.map((item: any) => (
                   <a key={item.label} href={item.href} className="flex items-start gap-4" data-hover>
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border text-base transition-all" style={{ border: '1px solid rgba(255,255,255,0.07)', borderRadius: '2px' }}>{item.icon}</div>
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center border text-base transition-all" style={{ border: '1px solid rgba(0,0,0,0.08)', borderRadius: '2px' }}>{item.icon}</div>
                     <div>
                       <div className="font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: 'var(--c-muted)' }}>{item.label}</div>
                       <div className="text-[0.88rem]" style={{ color: 'var(--c-cream)' }}>{item.val}</div>
@@ -805,7 +835,7 @@ function ContactSection({ settings, services }: { settings: any; services: any[]
             {sent ? (
               <div className="text-center py-12">
                 <div className="font-serif text-[1.8rem] mb-3" style={{ color: 'var(--c-gold)' }}>Thank You ✦</div>
-                <p className="text-[0.85rem]" style={{ color: 'rgba(245,240,234,0.45)' }}>We'll respond within 24 hours.</p>
+                <p className="text-[0.85rem]" style={{ color: 'rgba(0,0,0,0.5)' }}>We'll respond within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">

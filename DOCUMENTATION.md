@@ -488,3 +488,143 @@ Now any authenticated admin can delete content. Only user management (create/tog
 | 14 | Admin Users | ✅ Superadmin only | — |
 | 15 | Responsive Navbar | — | ✅ Mobile hamburger + scroll lock |
 | 16 | Dynamic Footer | — | ✅ Settings-based content + socials |
+
+
+---
+
+## 🔄 LATEST UPDATES (Session 2)
+
+### Theme Change — White/Light Professional Photography Theme
+
+The entire public website has been switched from a dark luxury theme to a clean white/light photography theme.
+
+**Color Palette:**
+| Color | Hex | Usage |
+|-------|-----|-------|
+| White | `#ffffff` | Page backgrounds |
+| Light Gray | `#f8f8f8` | Alternate section backgrounds |
+| Navy Dark | `#1a1a2e` | Text color, headings |
+| Pink | `#e91e8c` | Primary accent (from logo) |
+| Purple | `#c4a0d4` | Secondary accent |
+| Navy | `#1e1b4b` | Footer background |
+
+**Font Family:** Helvetica Neue (entire website + admin panel)
+
+### Navbar
+- Transparent background (no color)
+- Dark blue text, semibold
+- Hover: Pink color + light pink background pill
+- Active page: Pink underline
+- Mobile: Dropdown card (not fullscreen), tap outside to close
+- Logo: `Iodine-Logo.png` + "IodineVapor" text
+
+### Footer
+- Dark navy gradient background
+- Top gradient line (pink → purple → blue)
+- `iodineLogo.png` with light sky blue background box
+- Motion animations on scroll
+- Social icons with hover effects
+- Link hover: Pink + slide right
+- Copyright link to `/copyright` page
+
+### Service Cards (Homepage + /services)
+- Background image from admin (always visible, white overlay for readability)
+- Hover: Image zoom effect
+- "Enquire Now →" button always visible, links to `/contact`
+- Features list with pink bullets
+- Admin: Image upload via "Service Image" → Pick button
+
+### Hero Sections
+- Max 3 panels on desktop (side-by-side)
+- 4+ slides: Panels auto-cycle vertically every 5 seconds
+- Lighter overlays for white theme
+- Default title color: Dark navy (visible on light backgrounds)
+- Content position: 9-grid absolute positioning
+
+### Stats Section (Homepage)
+- Pink numbers (Bebas Neue font)
+- Semibold labels
+- No background — clean and simple
+- Responsive: wraps on mobile
+- Values from Admin → Site Settings → Stats
+
+### Products Page (`/products`)
+- Full product catalog with search, filter, pagination
+- Product detail page with image gallery, specs, price
+- Added to Navbar and Footer navigation
+
+### Video Showcase
+- Camera button (gradient border, fixed right side)
+- Click → white flash → fullscreen video player
+- Videos from Admin → Showcase Videos
+- Vertical swipe on mobile
+- Auto-advance every 8 seconds
+
+### Copyright Page (`/copyright`)
+- Full legal page with sections
+- Business registration badges
+- Linked from footer
+
+### Workshop Registration Flow
+- `/workshops/[slug]` — full detail page with registration form
+- User fills: Name, Email, Phone, Message
+- Backend saves to: workshop.registrations[] + Enquiry (type: workshop)
+- Admin sees: Admin → Enquiries → filter "workshop"
+- Seats tracking + "seats left" warning
+
+### Admin Panel Fixes
+- Dark theme preserved (separate from public white theme)
+- All input fields: Dark navy background
+- Labels, borders: Light colors visible on dark
+- Helvetica font throughout
+- Pink accent colors
+- Settings page: Group nav properly visible
+- SEO Manager: Colors fixed
+- Slides CMS: Filter buttons readable (pink active, gray inactive)
+- Delete operations: Work for all admin roles (not just superadmin)
+
+### Mobile Responsive
+- Navbar: Dropdown card menu (not fullscreen)
+- Tap outside to dismiss
+- Hero: Single slide carousel with touch swipe
+- All pages: Proper padding and font sizing
+- Touch targets: Min 44px
+
+### File Upload
+- Max size: 250MB (for large videos)
+- Supported: jpg, png, gif, webp, svg, mp4, webm, mov, pdf, doc
+- Storage: `backend/public/uploads/` (images/, videos/, pdfs/, documents/)
+
+---
+
+## 📱 RESPONSIVE BREAKPOINTS
+
+| Breakpoint | Width | Behavior |
+|-----------|-------|----------|
+| Mobile | < 768px | Single column, hamburger menu, carousel slides |
+| Tablet | 768px - 1024px | 2 columns, some panels |
+| Desktop | > 1024px | Full layout, multi-panel hero, all nav links |
+
+---
+
+## 🎨 DESIGN SYSTEM
+
+### Typography
+- **Body:** Helvetica Neue, 500 weight
+- **Headings:** Bebas Neue (display font)
+- **Serif accents:** DM Serif Display (subtitles)
+
+### Buttons
+- **Primary:** Pink background, white text, 600 weight
+- **Ghost:** Border only, dark text, hover → pink
+
+### Cards
+- White background, subtle border
+- Hover: Shadow + slight lift
+- Service cards: Background image with white overlay
+
+### Animations
+- **Word Motion:** Key headings gently float (5s cycle)
+- **Scroll Reveal:** Fade-in + slide-up on viewport enter
+- **Hover Effects:** Scale, color change, gap expansion
+- **Ticker/Marquee:** Continuous horizontal scroll, gradient background

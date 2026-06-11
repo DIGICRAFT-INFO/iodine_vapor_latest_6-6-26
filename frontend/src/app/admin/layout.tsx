@@ -38,12 +38,12 @@ function Sidebar() {
   return (
     <aside className="admin-sidebar w-60 flex-shrink-0 flex flex-col h-screen sticky top-0 overflow-y-auto">
       {/* Logo */}
-      <div className="p-5 border-b" style={{ borderColor: 'rgba(201,169,110,0.08)' }}>
+      <div className="p-5 border-b" style={{ borderColor: 'rgba(233,30,140,0.08)' }}>
         <Link href="/admin" className="block">
-          <div className="font-display text-[1.4rem] tracking-[0.12em] text-cream-DEFAULT">
-            Iodine<span style={{ color: 'var(--c-gold)' }}>.</span>Admin
+          <div className="font-display text-[1.4rem] tracking-[0.12em]" style={{ color: '#f5f0ea' }}>
+            Iodine<span style={{ color: '#e91e8c' }}>.</span>Admin
           </div>
-          <div className="font-mono text-[0.52rem] tracking-[0.2em] uppercase mt-1" style={{ color: 'rgba(201,169,110,0.6)' }}>
+          <div className="font-mono text-[0.52rem] tracking-[0.2em] uppercase mt-1" style={{ color: 'rgba(233,30,140,0.6)' }}>
             {user?.role}
           </div>
         </Link>
@@ -54,16 +54,16 @@ function Sidebar() {
         {NAV_GROUPS.map(group => (
           <div key={group.label || 'main'} className="mb-4">
             {group.label && (
-              <p className="px-4 py-2 font-mono text-[0.48rem] tracking-[0.28em] uppercase" style={{ color: 'rgba(245,240,234,0.18)' }}>{group.label}</p>
+              <p className="px-4 py-2 font-mono text-[0.48rem] tracking-[0.28em] uppercase" style={{ color: 'rgba(255,255,255,0.2)' }}>{group.label}</p>
             )}
             {group.items.filter(item => !('superOnly' in item) || !item.superOnly || isSuper).map(item => {
               const active = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href));
               return (
                 <Link key={item.href} href={item.href}
                   className={`admin-nav-item ${active ? 'active' : ''}`}>
-                  <span style={{ fontSize: '0.9rem', color: active ? 'var(--c-gold)' : 'inherit' }}>{item.icon}</span>
+                  <span style={{ fontSize: '0.9rem', color: active ? '#e91e8c' : 'inherit' }}>{item.icon}</span>
                   <span>{item.label}</span>
-                  {active && <span className="ml-auto text-[0.5rem]" style={{ color: 'var(--c-gold)' }}>▸</span>}
+                  {active && <span className="ml-auto text-[0.5rem]" style={{ color: '#e91e8c' }}>▸</span>}
                 </Link>
               );
             })}
@@ -72,14 +72,14 @@ function Sidebar() {
       </nav>
 
       {/* User */}
-      <div className="p-4 border-t" style={{ borderColor: 'rgba(201,169,110,0.08)' }}>
-        <div className="flex items-center gap-3 mb-3 p-3 rounded" style={{ background: 'rgba(255,255,255,0.02)' }}>
-          <div className="w-8 h-8 flex items-center justify-center font-display text-[1rem]" style={{ background: 'rgba(201,169,110,0.15)', color: 'var(--c-gold)', borderRadius: '2px' }}>
+      <div className="p-4 border-t" style={{ borderColor: 'rgba(233,30,140,0.08)' }}>
+        <div className="flex items-center gap-3 mb-3 p-3 rounded" style={{ background: 'rgba(255,255,255,0.03)' }}>
+          <div className="w-8 h-8 flex items-center justify-center font-display text-[1rem]" style={{ background: 'rgba(233,30,140,0.15)', color: '#e91e8c', borderRadius: '2px' }}>
             {user?.name?.[0]?.toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="text-[0.78rem] font-semibold text-cream-DEFAULT truncate">{user?.name}</div>
-            <div className="text-[0.58rem] truncate" style={{ color: 'rgba(245,240,234,0.35)' }}>{user?.email}</div>
+            <div className="text-[0.78rem] font-semibold truncate" style={{ color: '#f5f0ea' }}>{user?.name}</div>
+            <div className="text-[0.58rem] truncate" style={{ color: 'rgba(255,255,255,0.4)' }}>{user?.email}</div>
           </div>
         </div>
         <button onClick={logout} className="admin-nav-item w-full" style={{ color: '#d63a2f' }}>
@@ -108,7 +108,7 @@ function AdminContent({ children }: { children: React.ReactNode }) {
   if (pathname === '/admin/login') return <>{children}</>;
 
   return (
-    <div className="flex min-h-screen" style={{ background: '#0a0a0a' }}>
+    <div className="flex min-h-screen" style={{ background: '#0a0a0a', color: '#f5f0ea' }}>
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0">
         <main className="flex-1 p-6 md:p-8 overflow-auto">

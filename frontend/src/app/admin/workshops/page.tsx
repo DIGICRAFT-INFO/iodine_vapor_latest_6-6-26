@@ -29,13 +29,13 @@ export default function AdminWorkshops() {
     <div>
       <AdminHeader title="Workshops" subtitle={`${workshops.length} workshops`} action={<AddBtn onClick={() => { setForm(empty()); setShowForm(true); }} label="New Workshop" />} />
 
-      <div className="border divide-y" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+      <div className="border divide-y" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
         {isLoading ? Array.from({length:4}).map((_,i) => <div key={i} className="h-16 shimmer mx-4 my-2" style={{ borderRadius: '2px' }} />) :
         workshops.length === 0 ? (
-          <div className="p-12 text-center"><p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(245,240,234,0.2)' }}>No workshops yet</p><AddBtn onClick={() => { setForm(empty()); setShowForm(true); }} label="Add First Workshop" /></div>
+          <div className="p-12 text-center"><p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>No workshops yet</p><AddBtn onClick={() => { setForm(empty()); setShowForm(true); }} label="Add First Workshop" /></div>
         ) : workshops.map((w: any) => (
-          <div key={w._id} className="flex items-center gap-4 px-5 py-4 transition-colors" style={{ borderColor: 'rgba(255,255,255,0.04)' }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)'}
+          <div key={w._id} className="flex items-center gap-4 px-5 py-4 transition-colors" style={{ borderColor: 'rgba(0,0,0,0.03)' }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.02)'}
             onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
             <div className="w-14 h-10 flex-shrink-0 overflow-hidden" style={{ background: '#1a1a1a', borderRadius: '2px' }}>
               {w.coverImage?.url && <img src={imgUrl(w.coverImage.url)} alt="" className="w-full h-full object-cover" />}
@@ -47,10 +47,10 @@ export default function AdminWorkshops() {
                 {w.isFree && <span className="font-mono text-[0.44rem] px-1.5 py-0.5 uppercase" style={{ color: '#4ade80', background: 'rgba(74,222,128,0.08)', borderRadius: '2px' }}>Free</span>}
               </div>
               <div className="flex items-center gap-3">
-                {w.date && <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(245,240,234,0.3)' }}>{format(new Date(w.date), 'MMM d, yyyy')}</span>}
-                {w.location && <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(245,240,234,0.25)' }}>📍 {w.location}</span>}
+                {w.date && <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(255,255,255,0.4)' }}>{format(new Date(w.date), 'MMM d, yyyy')}</span>}
+                {w.location && <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(255,255,255,0.3)' }}>📍 {w.location}</span>}
                 <span className="font-mono text-[0.5rem]" style={{ color: 'var(--c-gold)' }}>{w.isFree ? 'Free' : `₹${w.price}`}</span>
-                <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(245,240,234,0.25)' }}>{w.registrations?.length || 0} registered</span>
+                <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(255,255,255,0.3)' }}>{w.registrations?.length || 0} registered</span>
               </div>
             </div>
             <div className="flex gap-1.5 flex-shrink-0">
@@ -105,3 +105,4 @@ export default function AdminWorkshops() {
     </div>
   );
 }
+

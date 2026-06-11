@@ -74,7 +74,7 @@ export default function VideoShowcase() {
             <button
               onClick={() => setShowVideos(false)}
               className="absolute top-6 right-6 z-20 font-mono text-[0.6rem] tracking-[0.15em] uppercase px-4 py-2 border transition-all hover:border-gold-DEFAULT hover:text-gold-DEFAULT"
-              style={{ borderColor: 'rgba(255,255,255,0.15)', color: 'rgba(245,240,234,0.5)', borderRadius: '2px' }}
+              style={{ borderColor: 'rgba(255,255,255,0.15)', color: 'rgba(0,0,0,0.55)', borderRadius: '2px' }}
             >
               ✕ Close
             </button>
@@ -82,8 +82,8 @@ export default function VideoShowcase() {
             {!hasVideos ? (
               <div className="text-center">
                 <div className="font-display text-[2rem] mb-3" style={{ color: 'var(--c-gold)' }}>📽️</div>
-                <p className="font-mono text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.3)' }}>No videos uploaded yet</p>
-                <p className="text-[0.8rem] mt-2" style={{ color: 'rgba(245,240,234,0.4)' }}>Add videos from Admin → Showcase Videos</p>
+                <p className="font-mono text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(0,0,0,0.35)' }}>No videos uploaded yet</p>
+                <p className="text-[0.8rem] mt-2" style={{ color: 'rgba(0,0,0,0.5)' }}>Add videos from Admin → Showcase Videos</p>
               </div>
             ) : (
               <>
@@ -109,7 +109,7 @@ export default function VideoShowcase() {
                         {videos[currentVideo]?.title}
                       </h3>
                       {videos[currentVideo]?.description && (
-                        <p className="font-mono text-[0.58rem] tracking-[0.12em] mt-2" style={{ color: 'rgba(245,240,234,0.35)' }}>
+                        <p className="font-mono text-[0.58rem] tracking-[0.12em] mt-2" style={{ color: 'rgba(0,0,0,0.4)' }}>
                           {videos[currentVideo].description}
                         </p>
                       )}
@@ -122,7 +122,7 @@ export default function VideoShowcase() {
                     {videos.map((_: any, i: number) => (
                       <button key={i} onClick={() => setCurrentVideo(i)}
                         className="transition-all duration-300"
-                        style={{ width: '6px', height: i === currentVideo ? '28px' : '6px', borderRadius: '3px', background: i === currentVideo ? 'var(--c-gold)' : 'rgba(245,240,234,0.25)', transition: 'all 0.3s' }}
+                        style={{ width: '6px', height: i === currentVideo ? '28px' : '6px', borderRadius: '3px', background: i === currentVideo ? 'var(--c-gold)' : 'rgba(0,0,0,0.25)', transition: 'all 0.3s' }}
                       />
                     ))}
                   </div>
@@ -151,7 +151,7 @@ export default function VideoShowcase() {
         }}
         aria-label="Open video showcase"
       >
-        <div className="w-full h-full rounded-full flex items-center justify-center transition-all group-hover:scale-110" style={{ background: '#080808' }}>
+        <div className="w-full h-full rounded-full flex items-center justify-center transition-all group-hover:scale-110" style={{ background: '#ffffff' }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#camGradBtn)" strokeWidth="1.5">
             <defs>
               <linearGradient id="camGradBtn" x1="0%" y1="0%" x2="100%" y2="100%">

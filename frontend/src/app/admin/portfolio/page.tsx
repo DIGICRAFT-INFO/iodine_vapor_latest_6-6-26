@@ -35,13 +35,13 @@ export default function AdminPortfolio() {
       <div className="flex flex-wrap gap-2 mb-6">
         <button onClick={() => setFilterCat('')}
           className="px-4 py-2 font-mono text-[0.54rem] tracking-[0.15em] uppercase transition-all"
-          style={{ borderRadius: '2px', background: !filterCat ? 'var(--c-gold)' : 'rgba(255,255,255,0.04)', color: !filterCat ? '#080808' : 'rgba(245,240,234,0.35)', border: `1px solid ${!filterCat ? 'var(--c-gold)' : 'rgba(255,255,255,0.07)'}` }}>
+          style={{ borderRadius: '2px', background: !filterCat ? 'var(--c-gold)' : 'rgba(0,0,0,0.03)', color: !filterCat ? '#080808' : 'rgba(0,0,0,0.4)', border: `1px solid ${!filterCat ? 'var(--c-gold)' : 'rgba(0,0,0,0.08)'}` }}>
           All
         </button>
         {CATS.map(cat => (
           <button key={cat} onClick={() => setFilterCat(cat)}
             className="px-4 py-2 font-mono text-[0.54rem] tracking-[0.15em] uppercase capitalize transition-all"
-            style={{ borderRadius: '2px', background: filterCat === cat ? 'var(--c-gold)' : 'rgba(255,255,255,0.04)', color: filterCat === cat ? '#080808' : 'rgba(245,240,234,0.35)', border: `1px solid ${filterCat === cat ? 'var(--c-gold)' : 'rgba(255,255,255,0.07)'}` }}>
+            style={{ borderRadius: '2px', background: filterCat === cat ? 'var(--c-gold)' : 'rgba(0,0,0,0.03)', color: filterCat === cat ? '#080808' : 'rgba(0,0,0,0.4)', border: `1px solid ${filterCat === cat ? 'var(--c-gold)' : 'rgba(0,0,0,0.08)'}` }}>
             {cat}
           </button>
         ))}
@@ -53,8 +53,8 @@ export default function AdminPortfolio() {
           {Array.from({length:8}).map((_,i) => <div key={i} className="aspect-square shimmer" style={{ borderRadius: '2px' }} />)}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-16 border" style={{ borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
-          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(245,240,234,0.2)' }}>No portfolio items</p>
+        <div className="text-center py-16 border" style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
+          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>No portfolio items</p>
           <AddBtn onClick={() => { setForm(empty()); setShowForm(true); }} label="Add First Item" />
         </div>
       ) : (
@@ -152,3 +152,4 @@ export default function AdminPortfolio() {
     </div>
   );
 }
+

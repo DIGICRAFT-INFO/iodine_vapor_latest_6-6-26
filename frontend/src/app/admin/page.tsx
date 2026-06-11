@@ -47,7 +47,7 @@ export default function AdminDashboard() {
           <h1 className="font-display text-[2.2rem] tracking-[0.06em] text-cream-DEFAULT">
             Welcome, {user?.name?.split(' ')[0]}
           </h1>
-          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mt-1" style={{ color: 'rgba(245,240,234,0.3)' }}>
+          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mt-1" style={{ color: 'rgba(255,255,255,0.4)' }}>
             Iodine Vapor CMS Dashboard
           </p>
         </div>
@@ -68,14 +68,14 @@ export default function AdminDashboard() {
             transition={{ delay: i * 0.06 }}
           >
             <Link href={card.href} className="block p-4 border transition-all duration-300 group"
-              style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}
+              style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = card.color + '35'; (e.currentTarget as HTMLElement).style.background = card.color + '08'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)'; }}>
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,0,0,0.07)'; (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.02)'; }}>
               <div className="text-xl mb-2" style={{ color: card.color }}>{card.icon}</div>
               <div className="font-display text-[2rem] leading-none text-cream-DEFAULT mb-1">
                 {isLoading ? '—' : stats[card.key] ?? 0}
               </div>
-              <div className="font-mono text-[0.5rem] tracking-[0.15em] uppercase" style={{ color: 'rgba(245,240,234,0.3)' }}>{card.label}</div>
+              <div className="font-mono text-[0.5rem] tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>{card.label}</div>
             </Link>
           </motion.div>
         ))}
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45 }}
           className="border p-6"
-          style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}
+          style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}
         >
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-cream-DEFAULT flex items-center gap-2">
@@ -97,7 +97,7 @@ export default function AdminDashboard() {
             <Link href="/admin/enquiries" className="font-mono text-[0.52rem] tracking-[0.15em] uppercase" style={{ color: 'var(--c-gold)' }}>View all →</Link>
           </div>
           <div className="space-y-2">
-            {recent.length === 0 && <p className="text-center py-8 font-mono text-[0.6rem]" style={{ color: 'rgba(245,240,234,0.2)' }}>No enquiries yet</p>}
+            {recent.length === 0 && <p className="text-center py-8 font-mono text-[0.6rem]" style={{ color: 'rgba(255,255,255,0.25)' }}>No enquiries yet</p>}
             {recent.map((e: any) => (
               <div key={e._id} className="flex items-start gap-3 p-3 transition-colors"
                 style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '2px' }}>
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
                       {e.status}
                     </span>
                   </div>
-                  <p className="text-[0.72rem] truncate" style={{ color: 'rgba(245,240,234,0.35)' }}>{e.subject || e.message?.slice(0, 60)}</p>
+                  <p className="text-[0.72rem] truncate" style={{ color: 'rgba(255,255,255,0.45)' }}>{e.subject || e.message?.slice(0, 60)}</p>
                 </div>
               </div>
             ))}
@@ -126,7 +126,7 @@ export default function AdminDashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.52 }}
           className="border p-6"
-          style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}
+          style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}
         >
           <h2 className="font-mono text-[0.62rem] tracking-[0.22em] uppercase text-cream-DEFAULT mb-5 flex items-center gap-2">
             <span style={{ color: 'var(--c-gold)' }}>◈</span> Quick Actions
@@ -145,7 +145,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Website link */}
-          <div className="mt-5 pt-5 border-t" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+          <div className="mt-5 pt-5 border-t" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
             <a href="/" target="_blank" rel="noreferrer"
               className="flex items-center justify-between p-3 border transition-all duration-200"
               style={{ borderColor: 'rgba(201,169,110,0.15)', borderRadius: '2px' }}
@@ -162,3 +162,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

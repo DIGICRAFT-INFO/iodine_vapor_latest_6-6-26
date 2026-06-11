@@ -47,7 +47,7 @@ export default function AdminSEO() {
         action={
           <button onClick={() => saveMut.mutate()} disabled={!dirty || saveMut.isPending}
             className="flex items-center gap-2 px-5 py-2.5 font-mono text-[0.58rem] tracking-[0.18em] uppercase transition-all"
-            style={{ background: dirty ? 'var(--c-gold)' : 'rgba(255,255,255,0.06)', color: dirty ? '#080808' : 'rgba(245,240,234,0.3)', borderRadius: '2px', cursor: dirty ? 'pointer' : 'not-allowed' }}>
+            style={{ background: dirty ? 'var(--c-gold)' : 'rgba(255,255,255,0.07)', color: dirty ? '#ffffff' : 'rgba(255,255,255,0.4)', borderRadius: '2px', cursor: dirty ? 'pointer' : 'not-allowed' }}>
             {saveMut.isPending ? '…' : '✓'} {dirty ? 'Save SEO' : 'Saved'}
           </button>
         }
@@ -56,11 +56,11 @@ export default function AdminSEO() {
       <div className="flex gap-6">
         {/* Pages nav */}
         <div className="w-48 flex-shrink-0">
-          <div className="border p-2 space-y-0.5" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+          <div className="border p-2 space-y-0.5" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
             {PAGES.map(p => (
               <button key={p.key} onClick={() => { setActive(p.key); setDirty(false); }}
                 className="w-full text-left px-3 py-2.5 font-mono text-[0.54rem] tracking-[0.14em] uppercase transition-all"
-                style={{ borderRadius: '2px', background: activePage === p.key ? 'rgba(201,169,110,0.1)' : 'transparent', color: activePage === p.key ? 'var(--c-cream)' : 'rgba(245,240,234,0.35)', borderLeft: activePage === p.key ? '2px solid var(--c-gold)' : '2px solid transparent' }}>
+                style={{ borderRadius: '2px', background: activePage === p.key ? 'rgba(201,169,110,0.1)' : 'transparent', color: activePage === p.key ? 'var(--c-cream)' : 'rgba(255,255,255,0.45)', borderLeft: activePage === p.key ? '2px solid var(--c-gold)' : '2px solid transparent' }}>
                 {p.label}
               </button>
             ))}
@@ -73,7 +73,7 @@ export default function AdminSEO() {
             <div className="space-y-4">{Array.from({length:4}).map((_,i) => <div key={i} className="h-12 shimmer" style={{ borderRadius: '2px' }} />)}</div>
           ) : (
             <motion.div key={activePage} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-              <div className="border p-6 space-y-5" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+              <div className="border p-6 space-y-5" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
                 <h2 className="font-display text-[1.2rem] tracking-[0.06em] text-cream-DEFAULT">
                   {PAGES.find(p => p.key === activePage)?.label} — SEO
                 </h2>
@@ -81,8 +81,8 @@ export default function AdminSEO() {
                 {/* Meta Title */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <label className="font-mono text-[0.52rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.4)' }}>Meta Title</label>
-                    <span className={`font-mono text-[0.48rem] ${len(form.metaTitle) > 60 ? 'text-red-400' : len(form.metaTitle) > 50 ? 'text-yellow-400' : 'opacity-40'}`} style={{ color: len(form.metaTitle) > 60 ? '#f87171' : len(form.metaTitle) > 50 ? '#fbbf24' : 'rgba(245,240,234,0.3)' }}>
+                    <label className="font-mono text-[0.52rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.5)' }}>Meta Title</label>
+                    <span className={`font-mono text-[0.48rem] ${len(form.metaTitle) > 60 ? 'text-red-400' : len(form.metaTitle) > 50 ? 'text-yellow-400' : 'opacity-40'}`} style={{ color: len(form.metaTitle) > 60 ? '#f87171' : len(form.metaTitle) > 50 ? '#fbbf24' : 'rgba(255,255,255,0.4)' }}>
                       {len(form.metaTitle)}/60
                     </span>
                   </div>
@@ -94,8 +94,8 @@ export default function AdminSEO() {
                 {/* Meta Desc */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <label className="font-mono text-[0.52rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.4)' }}>Meta Description</label>
-                    <span className="font-mono text-[0.48rem]" style={{ color: len(form.metaDescription) > 160 ? '#f87171' : 'rgba(245,240,234,0.3)' }}>
+                    <label className="font-mono text-[0.52rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.5)' }}>Meta Description</label>
+                    <span className="font-mono text-[0.48rem]" style={{ color: len(form.metaDescription) > 160 ? '#f87171' : 'rgba(255,255,255,0.4)' }}>
                       {len(form.metaDescription)}/160
                     </span>
                   </div>
@@ -106,29 +106,29 @@ export default function AdminSEO() {
 
                 {/* Keywords */}
                 <div>
-                  <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(245,240,234,0.4)' }}>Keywords (comma-separated)</label>
+                  <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>Keywords (comma-separated)</label>
                   <input value={form.keywords?.join(', ') || ''} onChange={e => set('keywords', e.target.value.split(',').map((s:string)=>s.trim()).filter(Boolean))}
                     placeholder="photography, videography, Iodine Vapor" className="input-field text-[0.82rem]" />
                 </div>
 
                 {/* OG Image */}
                 <div>
-                  <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(245,240,234,0.4)' }}>OG Image URL</label>
+                  <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>OG Image URL</label>
                   <input value={form.ogImage || ''} onChange={e => set('ogImage', e.target.value)}
                     placeholder="https://…/og-image.jpg" className="input-field text-[0.82rem]" />
                 </div>
 
                 {/* Canonical */}
                 <div>
-                  <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(245,240,234,0.4)' }}>Canonical URL</label>
+                  <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>Canonical URL</label>
                   <input value={form.canonical || ''} onChange={e => set('canonical', e.target.value)}
                     placeholder="https://iodinevapor.com/page" className="input-field text-[0.82rem]" />
                 </div>
               </div>
 
               {/* SERP Preview */}
-              <div className="border p-5" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
-                <p className="font-mono text-[0.5rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(245,240,234,0.25)' }}>Search Engine Preview</p>
+              <div className="border p-5" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
+                <p className="font-mono text-[0.5rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,255,255,0.3)' }}>Search Engine Preview</p>
                 <div className="space-y-1 p-4" style={{ background: '#fff', borderRadius: '4px' }}>
                   <p style={{ color: '#0f9d58', fontSize: '13px', fontFamily: 'Arial, sans-serif' }}>
                     iodinevapor.com/{activePage === 'home' ? '' : activePage}
@@ -148,3 +148,5 @@ export default function AdminSEO() {
     </div>
   );
 }
+
+

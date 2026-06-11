@@ -27,17 +27,17 @@ function CatSection({ title, queryKey, api }: { title: string; queryKey: string;
         <h3 className="font-mono text-[0.62rem] tracking-[0.22em] uppercase" style={{ color: 'var(--c-gold)' }}>◈ {title}</h3>
         <AddBtn onClick={() => { setForm(emptyFn()); setShowForm(true); }} label="Add" />
       </div>
-      <div className="border divide-y" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+      <div className="border divide-y" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
         {isLoading ? <div className="p-4"><div className="h-10 shimmer" style={{ borderRadius: '2px' }} /></div> :
         cats.length === 0 ? (
-          <div className="p-6 text-center font-mono text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.2)' }}>No categories</div>
+          <div className="p-6 text-center font-mono text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.25)' }}>No categories</div>
         ) : cats.map((cat: any) => (
-          <div key={cat._id} className="flex items-center gap-4 px-4 py-3 transition-colors" style={{ borderColor: 'rgba(255,255,255,0.04)' }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)'}
+          <div key={cat._id} className="flex items-center gap-4 px-4 py-3 transition-colors" style={{ borderColor: 'rgba(0,0,0,0.03)' }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.02)'}
             onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
             <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: cat.color || '#c9a96e' }} />
             <span className="flex-1 text-[0.82rem] text-cream-DEFAULT">{cat.name}</span>
-            <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(245,240,234,0.25)' }}>{cat.isActive ? '● Active' : '○ Hidden'}</span>
+            <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(255,255,255,0.3)' }}>{cat.isActive ? '● Active' : '○ Hidden'}</span>
             <div className="flex gap-1.5">
               <button onClick={() => { setForm({ ...cat }); setShowForm(true); }} className="px-3 py-1.5 font-mono text-[0.46rem] border" style={{ borderColor: 'rgba(201,169,110,0.2)', color: 'var(--c-gold)', borderRadius: '2px' }}>Edit</button>
               <button onClick={() => setDeleteId(cat._id)} className="px-3 py-1.5 font-mono text-[0.46rem] border" style={{ borderColor: 'rgba(214,58,47,0.2)', color: '#d63a2f', borderRadius: '2px' }}>Del</button>
@@ -75,3 +75,4 @@ export default function AdminCategories() {
     </div>
   );
 }
+

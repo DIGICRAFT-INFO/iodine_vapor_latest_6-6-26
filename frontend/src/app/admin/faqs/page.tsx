@@ -38,22 +38,22 @@ export default function AdminFAQs() {
         action={<AddBtn onClick={() => { setForm(emptyFaq()); setShowForm(true); }} />}
       />
 
-      <div className="border divide-y" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+      <div className="border divide-y" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
         {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="h-14 shimmer mx-4 my-2" style={{ borderRadius: '2px' }} />
           ))
         ) : faqs.length === 0 ? (
           <div className="p-12 text-center">
-            <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(245,240,234,0.2)' }}>No FAQs yet</p>
+            <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>No FAQs yet</p>
             <AddBtn onClick={() => { setForm(emptyFaq()); setShowForm(true); }} label="Add First FAQ" />
           </div>
         ) : faqs.map((faq: any) => (
           <div
             key={faq._id}
             className="flex items-start gap-4 px-5 py-4 transition-colors"
-            style={{ borderColor: 'rgba(255,255,255,0.04)' }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)'}
+            style={{ borderColor: 'rgba(0,0,0,0.03)' }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.02)'}
             onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
           >
             <div className="flex-1 min-w-0">
@@ -63,7 +63,7 @@ export default function AdminFAQs() {
                   {faq.isActive ? '● Active' : '○ Hidden'}
                 </span>
               </div>
-              <p className="text-[0.75rem] line-clamp-2" style={{ color: 'rgba(245,240,234,0.4)' }}>{faq.answer}</p>
+              <p className="text-[0.75rem] line-clamp-2" style={{ color: 'rgba(255,255,255,0.5)' }}>{faq.answer}</p>
               {faq.category && faq.category !== 'General' && (
                 <span className="font-mono text-[0.46rem] tracking-[0.12em] uppercase mt-1 inline-block" style={{ color: 'var(--c-gold)' }}>{faq.category}</span>
               )}
@@ -134,3 +134,4 @@ export default function AdminFAQs() {
     </div>
   );
 }
+

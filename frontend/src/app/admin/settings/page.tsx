@@ -71,7 +71,7 @@ export default function AdminSettings() {
         action={
           <button onClick={() => saveMut.mutate()} disabled={!dirty || saveMut.isPending}
             className="flex items-center gap-2 px-5 py-2.5 font-mono text-[0.58rem] tracking-[0.18em] uppercase transition-all"
-            style={{ background: dirty ? 'var(--c-gold)' : 'rgba(255,255,255,0.06)', color: dirty ? '#080808' : 'rgba(245,240,234,0.3)', borderRadius: '2px', cursor: dirty ? 'pointer' : 'not-allowed' }}>
+            style={{ background: dirty ? 'var(--c-gold)' : 'rgba(0,0,0,0.07)', color: dirty ? '#080808' : 'rgba(0,0,0,0.35)', borderRadius: '2px', cursor: dirty ? 'pointer' : 'not-allowed' }}>
             {saveMut.isPending ? '…' : '✓'} {dirty ? 'Save Changes' : 'Saved'}
           </button>
         }
@@ -80,19 +80,19 @@ export default function AdminSettings() {
       <div className="flex gap-6">
         {/* Group Nav */}
         <div className="w-44 flex-shrink-0">
-          <div className="border p-2 space-y-0.5" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+          <div className="border p-2 space-y-0.5" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '6px' }}>
             {GROUPS.map(g => (
               <button key={g.key} onClick={() => setActiveGroup(g.key)}
-                className="w-full flex items-center gap-3 px-4 py-2.5 font-mono text-[0.56rem] tracking-[0.15em] uppercase transition-all"
-                style={{ borderRadius: '2px', background: activeGroup === g.key ? 'rgba(201,169,110,0.1)' : 'transparent', color: activeGroup === g.key ? 'var(--c-cream)' : 'rgba(245,240,234,0.35)', borderLeft: activeGroup === g.key ? '2px solid var(--c-gold)' : '2px solid transparent' }}>
-                <span style={{ color: activeGroup === g.key ? 'var(--c-gold)' : 'inherit' }}>{g.icon}</span> {g.label}
+                className="w-full flex items-center gap-3 px-4 py-3 text-[0.7rem] tracking-[0.08em] uppercase transition-all font-semibold"
+                style={{ borderRadius: '4px', background: activeGroup === g.key ? 'rgba(233,30,140,0.1)' : 'transparent', color: activeGroup === g.key ? '#ffffff' : 'rgba(255,255,255,0.5)', borderLeft: activeGroup === g.key ? '3px solid #e91e8c' : '3px solid transparent' }}>
+                <span style={{ color: activeGroup === g.key ? '#e91e8c' : 'rgba(255,255,255,0.4)' }}>{g.icon}</span> {g.label}
               </button>
             ))}
           </div>
         </div>
 
         {/* Fields */}
-        <div className="flex-1 border p-6" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+        <div className="flex-1 border p-6" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
           {isLoading ? (
             <div className="space-y-4">{Array.from({length:5}).map((_,i) => <div key={i} className="h-12 shimmer" style={{ borderRadius: '2px' }} />)}</div>
           ) : (
@@ -101,7 +101,7 @@ export default function AdminSettings() {
 
               {groupFields.map(([key, meta]) => (
                 <div key={key}>
-                  <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(245,240,234,0.4)' }}>{meta.label}</label>
+                  <label className="block font-mono text-[0.52rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>{meta.label}</label>
 
                   {meta.type === 'color' && (
                     <div className="flex items-center gap-3">
@@ -115,7 +115,7 @@ export default function AdminSettings() {
                     <div className="flex items-center gap-3">
                       <input value={values[key] || ''} onChange={e => set(key, e.target.value)} className="input-field flex-1 text-[0.8rem]" placeholder="URL or pick from library…" />
                       <button onClick={() => setMediaKey(key)} className="px-4 py-3 font-mono text-[0.55rem] tracking-[0.15em] uppercase border transition-all" style={{ borderColor: 'rgba(201,169,110,0.25)', color: 'var(--c-gold)', borderRadius: '2px' }} data-hover>Pick</button>
-                      {values[key] && <img src={imgUrl(values[key])} alt="" className="h-12 w-12 object-contain border flex-shrink-0" style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '2px' }} />}
+                      {values[key] && <img src={imgUrl(values[key])} alt="" className="h-12 w-12 object-contain border flex-shrink-0" style={{ background: 'rgba(0,0,0,0.06)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '2px' }} />}
                     </div>
                   )}
 
@@ -131,13 +131,13 @@ export default function AdminSettings() {
 
               {/* Color preview */}
               {activeGroup === 'colors' && (
-                <div className="mt-6 p-4 border" style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
-                  <p className="font-mono text-[0.5rem] tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(245,240,234,0.25)' }}>Live Preview</p>
+                <div className="mt-6 p-4 border" style={{ borderColor: 'rgba(255,255,255,0.08)', borderRadius: '2px' }}>
+                  <p className="font-mono text-[0.5rem] tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(255,255,255,0.3)' }}>Live Preview</p>
                   <div className="flex flex-wrap gap-3 mb-3">
                     {['primary_color','secondary_color','accent_color','bg_color','text_color'].map(k => values[k] && (
                       <div key={k} className="flex items-center gap-2">
                         <div className="w-8 h-8 border" style={{ background: values[k], borderColor: 'rgba(255,255,255,0.1)', borderRadius: '2px' }} />
-                        <span className="font-mono text-[0.46rem] uppercase" style={{ color: 'rgba(245,240,234,0.3)' }}>{META[k]?.label}</span>
+                        <span className="font-mono text-[0.46rem] uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>{META[k]?.label}</span>
                       </div>
                     ))}
                   </div>
@@ -153,3 +153,4 @@ export default function AdminSettings() {
     </div>
   );
 }
+

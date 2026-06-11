@@ -33,8 +33,8 @@ export default function AdminVideos() {
       {isLoading ? (
         <div className="space-y-3">{Array.from({ length: 3 }).map((_, i) => <div key={i} className="h-16 shimmer" style={{ borderRadius: '2px' }} />)}</div>
       ) : videos.length === 0 ? (
-        <div className="text-center py-16 border" style={{ borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
-          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(245,240,234,0.2)' }}>No showcase videos yet</p>
+        <div className="text-center py-16 border" style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
+          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>No showcase videos yet</p>
           <AddBtn onClick={() => { setForm(emptyVideo()); setShowForm(true); }} label="Add First Video" />
         </div>
       ) : (
@@ -42,7 +42,7 @@ export default function AdminVideos() {
           {videos.map((video: any) => (
             <motion.div key={video._id} layout
               className="flex items-center gap-4 px-4 py-3 border transition-all"
-              style={{ background: 'rgba(255,255,255,0.015)', borderColor: video.isActive ? 'rgba(201,169,110,0.15)' : 'rgba(255,255,255,0.05)', borderRadius: '2px' }}>
+              style={{ background: 'rgba(255,255,255,0.02)', borderColor: video.isActive ? 'rgba(201,169,110,0.15)' : 'rgba(0,0,0,0.06)', borderRadius: '2px' }}>
               {/* Thumbnail */}
               {video.thumbnail ? (
                 <img src={imgUrl(video.thumbnail)} alt="" className="w-20 h-12 object-cover flex-shrink-0" style={{ borderRadius: '2px', filter: 'grayscale(20%)' }} />
@@ -55,16 +55,16 @@ export default function AdminVideos() {
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-[0.82rem] font-medium text-cream-DEFAULT truncate">{video.title || '(No title)'}</span>
                   <span className={`font-mono text-[0.46rem] tracking-[0.1em] uppercase px-1.5 py-0.5`}
-                    style={{ background: video.isActive ? 'rgba(74,222,128,0.08)' : 'rgba(255,255,255,0.04)', color: video.isActive ? '#4ade80' : 'rgba(245,240,234,0.3)', borderRadius: '2px' }}>
+                    style={{ background: video.isActive ? 'rgba(74,222,128,0.08)' : 'rgba(0,0,0,0.03)', color: video.isActive ? '#4ade80' : 'rgba(0,0,0,0.35)', borderRadius: '2px' }}>
                     {video.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </div>
-                <p className="text-[0.65rem] truncate" style={{ color: 'rgba(245,240,234,0.3)' }}>{video.videoUrl}</p>
+                <p className="text-[0.65rem] truncate" style={{ color: 'rgba(255,255,255,0.4)' }}>{video.videoUrl}</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button onClick={() => toggle.mutate({ id: video._id, d: { isActive: !video.isActive } })}
                   className="px-3 py-1.5 font-mono text-[0.5rem] tracking-[0.12em] uppercase border transition-all"
-                  style={{ borderColor: video.isActive ? 'rgba(74,222,128,0.25)' : 'rgba(255,255,255,0.08)', color: video.isActive ? '#4ade80' : 'rgba(245,240,234,0.3)', borderRadius: '2px' }}>
+                  style={{ borderColor: video.isActive ? 'rgba(74,222,128,0.25)' : 'rgba(0,0,0,0.08)', color: video.isActive ? '#4ade80' : 'rgba(0,0,0,0.35)', borderRadius: '2px' }}>
                   {video.isActive ? '● On' : '○ Off'}
                 </button>
                 <button onClick={() => { setForm({ ...video }); setShowForm(true); }}
@@ -133,3 +133,4 @@ export default function AdminVideos() {
     </div>
   );
 }
+

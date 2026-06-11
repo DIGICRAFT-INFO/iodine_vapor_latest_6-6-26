@@ -29,7 +29,7 @@ export default function AdminUsers() {
   if (!isSuper) return (
     <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
       <span className="font-display text-[3rem]" style={{ color: 'rgba(245,240,234,0.1)' }}>◒</span>
-      <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(245,240,234,0.2)' }}>Superadmin access required</p>
+      <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,255,255,0.25)' }}>Superadmin access required</p>
     </div>
   );
 
@@ -39,11 +39,11 @@ export default function AdminUsers() {
         action={<AddBtn onClick={() => setShowForm(true)} label="Add Admin" />}
       />
 
-      <div className="border divide-y" style={{ background: 'rgba(255,255,255,0.015)', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
+      <div className="border divide-y" style={{ background: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
         {isLoading ? Array.from({length:3}).map((_,i) => <div key={i} className="h-16 shimmer mx-4 my-2" style={{ borderRadius: '2px' }} />) :
         users.map((u: any) => (
           <div key={u._id} className="flex items-center gap-4 px-5 py-4 transition-colors"
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)'}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.02)'}
             onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
             {/* Avatar */}
             <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center font-display text-[1rem]"
@@ -60,8 +60,8 @@ export default function AdminUsers() {
                 <StatusBadge status={u.isActive ? 'active' : 'inactive'} />
               </div>
               <div className="flex items-center gap-4">
-                <span className="text-[0.72rem]" style={{ color: 'rgba(245,240,234,0.35)' }}>{u.email}</span>
-                {u.lastLogin && <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(245,240,234,0.2)' }}>Last: {format(new Date(u.lastLogin), 'MMM d, yyyy')}</span>}
+                <span className="text-[0.72rem]" style={{ color: 'rgba(255,255,255,0.45)' }}>{u.email}</span>
+                {u.lastLogin && <span className="font-mono text-[0.5rem]" style={{ color: 'rgba(255,255,255,0.25)' }}>Last: {format(new Date(u.lastLogin), 'MMM d, yyyy')}</span>}
               </div>
             </div>
             {u.role !== 'superadmin' && (
@@ -93,7 +93,7 @@ export default function AdminUsers() {
             <option value="superadmin">Superadmin</option>
           </select>
         </Field>
-        <div className="p-3 border text-[0.75rem]" style={{ borderColor: 'rgba(201,169,110,0.15)', background: 'rgba(201,169,110,0.04)', borderRadius: '2px', color: 'rgba(245,240,234,0.45)' }}>
+        <div className="p-3 border text-[0.75rem]" style={{ borderColor: 'rgba(201,169,110,0.15)', background: 'rgba(201,169,110,0.04)', borderRadius: '2px', color: 'rgba(255,255,255,0.5)' }}>
           <strong style={{ color: 'var(--c-gold)' }}>Admin</strong> — Can manage all content.<br />
           <strong style={{ color: 'var(--c-gold)' }}>Superadmin</strong> — Full access including user management, deleting products/categories, and site-critical settings.
         </div>
@@ -101,3 +101,4 @@ export default function AdminUsers() {
     </div>
   );
 }
+

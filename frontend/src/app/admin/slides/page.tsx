@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 const PAGES = ['home','about','services','portfolio','workshops','blog','faq','contact','quote','navbar','footer'];
 const emptyStyle = () => ({ text: '', color: '#f5f0ea', fontSize: '16px', fontWeight: '400', fontFamily: 'Syne', textAlign: 'left', italic: false, uppercase: false });
-const emptySlide = (page = 'home') => ({ page, title: emptyStyle(), subtitle: emptyStyle(), miniTitle: { ...emptyStyle(), color: '#c9a96e', fontSize: '0.62rem', uppercase: true }, paragraph: { ...emptyStyle(), color: 'rgba(245,240,234,0.5)', fontSize: '0.9rem' }, imageUrl: '', imageId: '', linkUrl: '', linkText: '', position: 'center', bgColor: '', bgGradient: '', overlayOpacity: 0.5, order: 0, isActive: true });
+const emptySlide = (page = 'home') => ({ page, title: emptyStyle(), subtitle: emptyStyle(), miniTitle: { ...emptyStyle(), color: '#c9a96e', fontSize: '0.62rem', uppercase: true }, paragraph: { ...emptyStyle(), color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem' }, imageUrl: '', imageId: '', linkUrl: '', linkText: '', position: 'center', bgColor: '', bgGradient: '', overlayOpacity: 0.5, order: 0, isActive: true });
 
 export default function AdminSlides() {
   const [filterPage, setFilterPage] = useState('home');
@@ -35,9 +35,9 @@ export default function AdminSlides() {
       {/* Page Filter */}
       <div className="flex flex-wrap gap-2 mb-6">
         {PAGES.map(p => (
-          <button key={p} onClick={() => setFilterPage(p)} data-hover
-            className="px-4 py-2 font-mono text-[0.56rem] tracking-[0.15em] uppercase capitalize transition-all"
-            style={{ borderRadius: '2px', background: filterPage === p ? 'var(--c-gold)' : 'rgba(255,255,255,0.04)', color: filterPage === p ? '#080808' : 'rgba(245,240,234,0.35)', border: `1px solid ${filterPage === p ? 'var(--c-gold)' : 'rgba(255,255,255,0.07)'}` }}>
+          <button key={p} onClick={() => setFilterPage(p)}
+            className="px-4 py-2 text-[0.65rem] tracking-[0.1em] uppercase capitalize transition-all font-semibold"
+            style={{ borderRadius: '4px', background: filterPage === p ? '#e91e8c' : 'rgba(255,255,255,0.05)', color: filterPage === p ? '#ffffff' : 'rgba(255,255,255,0.5)', border: `1px solid ${filterPage === p ? '#e91e8c' : 'rgba(255,255,255,0.1)'}` }}>
             {p}
           </button>
         ))}
@@ -47,8 +47,8 @@ export default function AdminSlides() {
       {isLoading ? (
         <div className="space-y-3">{Array.from({length:4}).map((_,i) => <div key={i} className="h-16 shimmer" style={{ borderRadius: '2px' }} />)}</div>
       ) : slides.length === 0 ? (
-        <div className="text-center py-16 border" style={{ borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px' }}>
-          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(245,240,234,0.2)' }}>No slides for "{filterPage}"</p>
+        <div className="text-center py-16 border" style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px' }}>
+          <p className="font-mono text-[0.58rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>No slides for "{filterPage}"</p>
           <AddBtn onClick={() => { setForm(emptySlide(filterPage)); setShowForm(true); }} label="Add First Slide" />
         </div>
       ) : (
@@ -56,22 +56,22 @@ export default function AdminSlides() {
           {slides.map((slide: any) => (
             <motion.div key={slide._id} layout
               className="flex items-center gap-4 px-4 py-3 border transition-all"
-              style={{ background: 'rgba(255,255,255,0.015)', borderColor: slide.isActive ? 'rgba(201,169,110,0.15)' : 'rgba(255,255,255,0.05)', borderRadius: '2px' }}>
-              <span className="font-mono text-[0.55rem]" style={{ color: 'rgba(245,240,234,0.25)' }}>⋮⋮</span>
+              style={{ background: 'rgba(255,255,255,0.02)', borderColor: slide.isActive ? 'rgba(201,169,110,0.15)' : 'rgba(0,0,0,0.06)', borderRadius: '2px' }}>
+              <span className="font-mono text-[0.55rem]" style={{ color: 'rgba(255,255,255,0.3)' }}>⋮⋮</span>
               {slide.imageUrl && <img src={imgUrl(slide.imageUrl)} alt="" className="w-14 h-10 object-cover flex-shrink-0" style={{ borderRadius: '2px', filter: 'grayscale(30%)' }} />}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                   <span className="text-[0.82rem] font-medium text-cream-DEFAULT truncate">{slide.title?.text || '(No title)'}</span>
                   <StatusBadge status={slide.isActive ? 'active' : 'inactive'} />
                   <span className="font-mono text-[0.48rem] tracking-[0.12em] uppercase px-1.5 py-0.5 capitalize" style={{ color: 'var(--c-gold)', background: 'rgba(201,169,110,0.08)', borderRadius: '2px' }}>{slide.page}</span>
-                  <span className="font-mono text-[0.46rem]" style={{ color: 'rgba(245,240,234,0.25)' }}>{slide.position}</span>
+                  <span className="font-mono text-[0.46rem]" style={{ color: 'rgba(255,255,255,0.3)' }}>{slide.position}</span>
                 </div>
-                {slide.subtitle?.text && <p className="text-[0.7rem] truncate" style={{ color: 'rgba(245,240,234,0.3)' }}>{slide.subtitle.text}</p>}
+                {slide.subtitle?.text && <p className="text-[0.7rem] truncate" style={{ color: 'rgba(255,255,255,0.4)' }}>{slide.subtitle.text}</p>}
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button onClick={() => toggle.mutate({ id: slide._id, d: { isActive: !slide.isActive } })}
                   className="px-3 py-1.5 font-mono text-[0.5rem] tracking-[0.12em] uppercase border transition-all"
-                  style={{ borderColor: slide.isActive ? 'rgba(74,222,128,0.25)' : 'rgba(255,255,255,0.08)', color: slide.isActive ? '#4ade80' : 'rgba(245,240,234,0.3)', borderRadius: '2px' }}>
+                  style={{ borderColor: slide.isActive ? 'rgba(74,222,128,0.25)' : 'rgba(0,0,0,0.08)', color: slide.isActive ? '#4ade80' : 'rgba(0,0,0,0.35)', borderRadius: '2px' }}>
                   {slide.isActive ? '● On' : '○ Off'}
                 </button>
                 <button onClick={() => { setForm({ ...slide }); setShowForm(true); }}
@@ -150,3 +150,4 @@ export default function AdminSlides() {
     </div>
   );
 }
+

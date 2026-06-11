@@ -4,18 +4,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg:     { DEFAULT: '#080808', 2: '#0f0f0f', 3: '#141414' },
-        cream:  { DEFAULT: '#f5f0ea', muted: '#e8dfd0' },
-        gold:   { DEFAULT: '#c9a96e', light: '#e8c88a', dark: '#a8864e' },
+        bg:     { DEFAULT: '#ffffff', 2: '#f8f8f8', 3: '#f0f0f0' },
+        cream:  { DEFAULT: '#1a1a2e', muted: '#333' },
+        gold:   { DEFAULT: '#e91e8c', light: '#ff4da6', dark: '#c4167a' },
         red:    { DEFAULT: '#d63a2f', dark: '#b02f26' },
-        purple: { DEFAULT: '#8b5cf6' },
-        muted:  '#4a4a4a',
+        purple: { DEFAULT: '#c4a0d4' },
+        navy:   { DEFAULT: '#1e1b4b' },
+        muted:  '#999999',
       },
       fontFamily: {
-        display: ['var(--font-bebas)', 'sans-serif'],
-        serif:   ['var(--font-dm-serif)', 'serif'],
-        sans:    ['var(--font-syne)', 'system-ui', 'sans-serif'],
-        mono:    ['var(--font-space-mono)', 'monospace'],
+        display: ['Bebas Neue', 'sans-serif'],
+        serif:   ['DM Serif Display', 'serif'],
+        sans:    ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+        mono:    ['Helvetica Neue', 'Helvetica', 'sans-serif'],
       },
       animation: {
         'float':      'float 6s ease-in-out infinite',

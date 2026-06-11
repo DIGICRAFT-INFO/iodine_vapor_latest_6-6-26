@@ -13,7 +13,7 @@ export default function AdminMediaPage() {
           Upload and manage images, videos, PDFs — each gets a unique ID
         </p>
       </div>
-      <div className="border" style={{ borderColor: 'rgba(255,255,255,0.06)', borderRadius: '2px', minHeight: '600px' }}>
+      <div className="border" style={{ borderColor: 'rgba(255,255,255,0.07)', borderRadius: '2px', minHeight: '600px' }}>
         <MediaPicker
           onSelect={(url) => setLastSelected(url)}
           onClose={() => {}}
@@ -22,7 +22,7 @@ export default function AdminMediaPage() {
       </div>
       {lastSelected && (
         <div className="mt-4 p-3 border flex items-center gap-3" style={{ borderColor: 'rgba(201,169,110,0.15)', borderRadius: '2px' }}>
-          <span className="font-mono text-[0.5rem] tracking-[0.15em] uppercase" style={{ color: 'rgba(245,240,234,0.3)' }}>Last selected:</span>
+          <span className="font-mono text-[0.5rem] tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.4)' }}>Last selected:</span>
           <code className="font-mono text-[0.65rem] break-all" style={{ color: 'var(--c-gold)' }}>{lastSelected}</code>
         </div>
       )}
