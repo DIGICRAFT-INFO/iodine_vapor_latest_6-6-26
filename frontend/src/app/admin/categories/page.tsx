@@ -14,9 +14,9 @@ function CatSection({ title, queryKey, api }: { title: string; queryKey: string;
   const qc = useQueryClient();
   const inv = () => qc.invalidateQueries({ queryKey: [queryKey] });
 
-  const { data: cats = [], isLoading } = useQuery({ queryKey: [queryKey], queryFn: api.getAll });
+  const { data: cats = [], isLoading } = useQuery<any[]>({ queryKey: [queryKey], queryFn: api.getAll });
   const save   = useMutation({ mutationFn: (d: any) => d._id ? api.update(d._id, d) : api.create(d), onSuccess: () => { inv(); toast.success('Saved!'); setShowForm(false); }, onError: () => toast.error('Failed') });
-  const remove = useMutation({ mutationFn: api.delete, onSuccess: () => { inv(); toast.success('Deleted'); setDeleteId(null); } });
+  const remove = useMutation({ mutationFn: (id: string) => api.delete(id), onSuccess: () => { inv(); toast.success('Deleted'); setDeleteId(null); } });
 
   const up = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
   const emptyFn = () => ({ name: '', color: '#c9a96e', order: 0, isActive: true });
