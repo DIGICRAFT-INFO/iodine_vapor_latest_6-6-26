@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { settingsApi } from '@/lib/api';
+import { FaInstagramSquare, FaYoutubeSquare } from 'react-icons/fa';
+import { SlSocialBehance } from 'react-icons/sl';
+import { CiLinkedin } from 'react-icons/ci';
 
 const NAV = {
   'Navigate': [
@@ -55,10 +58,10 @@ export default function Footer() {
             {/* Social */}
             <div className="flex gap-3">
               {[
-                { key: 'social_instagram', label: 'IG', icon: '📸' },
-                { key: 'social_youtube', label: 'YT', icon: '▶' },
-                { key: 'social_linkedin', label: 'IN', icon: '💼' },
-                { key: 'social_behance', label: 'BE', icon: '🎨' },
+                { key: 'social_instagram', icon: <FaInstagramSquare size={22} /> },
+                { key: 'social_youtube', icon: <FaYoutubeSquare size={22} /> },
+                { key: 'social_linkedin', icon: <CiLinkedin size={22} /> },
+                { key: 'social_behance', icon: <SlSocialBehance size={22} /> },
               ].map(item => s?.[item.key] ? (
                 <motion.a
                   key={item.key}
@@ -66,12 +69,12 @@ export default function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   whileHover={{ scale: 1.15, y: -2 }}
-                  className="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300 text-[0.6rem] font-bold"
+                  className="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300"
                   style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.08)' }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(233,30,140,0.15)'; (e.currentTarget as HTMLElement).style.borderColor = '#e91e8c'; (e.currentTarget as HTMLElement).style.color = '#e91e8c'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.06)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)'; (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.6)'; }}
                 >
-                  {item.label}
+                  {item.icon}
                 </motion.a>
               ) : null)}
             </div>
