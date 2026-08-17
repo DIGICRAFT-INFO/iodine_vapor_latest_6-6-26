@@ -201,66 +201,97 @@ export default function Navbar() {
                     <AnimatePresence>
                       {servicesOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 8 }}
-                          transition={{ duration: 0.18 }}
-                          className="absolute top-full left-1/2 mt-1 rounded-lg overflow-hidden"
+                          initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                          className="absolute top-full mt-2 overflow-hidden"
                           style={{
+                            left: '50%',
                             transform: 'translateX(-50%)',
-                            width: '680px',
+                            width: '760px',
                             background: '#ffffff',
-                            boxShadow: '0 20px 60px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.08)',
-                            border: '1px solid rgba(0,0,0,0.08)',
+                            boxShadow: '0 24px 64px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.07)',
+                            border: '1px solid rgba(0,0,0,0.07)',
+                            borderRadius: '16px',
                           }}
                           onMouseEnter={handleServicesEnter}
                           onMouseLeave={handleServicesLeave}
                         >
-                          <div className="px-6 pt-5 pb-3 border-b" style={{ borderColor: 'rgba(0,0,0,0.06)' }}>
-                            <p className="font-mono text-[0.5rem] tracking-[0.28em] uppercase" style={{ color: 'rgba(0,0,0,0.35)' }}>
-                              Photography Services
+                          {/* Top header */}
+                          <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b"
+                            style={{ borderColor: 'rgba(0,0,0,0.06)', background: 'linear-gradient(135deg, #fdf2f8 0%, #faf0ff 100%)' }}>
+                            <div className="flex items-center gap-2">
+                              <div className="w-1.5 h-4 rounded-full" style={{ background: '#e91e8c' }} />
+                              <span className="font-bold text-[0.82rem]" style={{ color: '#1a1a2e', fontFamily: "'Syne', sans-serif" }}>Photography Services</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              {['Pan-India', 'GST Registered', 'MSME Certified'].map(b => (
+                                <span key={b} className="font-mono text-[0.44rem] tracking-[0.1em] uppercase px-2 py-0.5 rounded"
+                                  style={{ background: 'rgba(233,30,140,0.08)', color: '#e91e8c' }}>{b}</span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Services grid */}
+                          <div className="p-5">
+                            <div className="grid grid-cols-2 gap-1">
+                              {dynamicCategories.map((cat) => (
+                                <div key={cat.group} className="mb-3">
+                                  {/* Category header */}
+                                  <div className="flex items-center gap-2 px-3 py-1.5 mb-1 rounded-lg"
+                                    style={{ background: 'rgba(233,30,140,0.04)' }}>
+                                    <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: '#e91e8c' }} />
+                                    <span className="font-mono text-[0.48rem] tracking-[0.2em] uppercase font-semibold" style={{ color: '#e91e8c' }}>
+                                      {cat.group}
+                                    </span>
+                                  </div>
+                                  {/* Items */}
+                                  {cat.items.map(item => (
+                                    <Link
+                                      key={item.slug}
+                                      href={`/services/${item.slug}`}
+                                      className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[0.76rem] font-medium transition-all duration-150 group"
+                                      style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Helvetica Neue, Helvetica, sans-serif' }}
+                                      onMouseEnter={e => {
+                                        (e.currentTarget as HTMLElement).style.background = 'rgba(233,30,140,0.06)';
+                                        (e.currentTarget as HTMLElement).style.color = '#e91e8c';
+                                        (e.currentTarget as HTMLElement).style.paddingLeft = '14px';
+                                      }}
+                                      onMouseLeave={e => {
+                                        (e.currentTarget as HTMLElement).style.background = 'transparent';
+                                        (e.currentTarget as HTMLElement).style.color = 'rgba(0,0,0,0.6)';
+                                        (e.currentTarget as HTMLElement).style.paddingLeft = '12px';
+                                      }}
+                                    >
+                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.5 }}>
+                                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                                      </svg>
+                                      {item.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Footer CTA */}
+                          <div className="px-5 py-3.5 border-t flex items-center justify-between"
+                            style={{ borderColor: 'rgba(0,0,0,0.06)', background: '#fafafa' }}>
+                            <p className="text-[0.72rem]" style={{ color: 'rgba(0,0,0,0.4)', fontFamily: 'Helvetica Neue' }}>
+                              14+ years · 2000+ projects across India
                             </p>
-                          </div>
-                          <div className="grid grid-cols-2 gap-0 p-4">
-                            {dynamicCategories.map((cat) => (
-                              <div key={cat.group} className="p-2">
-                                <p className="font-mono text-[0.5rem] tracking-[0.22em] uppercase mb-2 px-2" style={{ color: '#e91e8c' }}>
-                                  {cat.group}
-                                </p>
-                                {cat.items.map(item => (
-                                  <Link
-                                    key={item.slug}
-                                    href={`/services/${item.slug}`}
-                                    className="flex items-center gap-2 px-2 py-1.5 rounded text-[0.75rem] font-medium transition-all duration-150"
-                                    style={{ color: 'rgba(0,0,0,0.65)', fontFamily: 'Helvetica Neue, Helvetica, sans-serif' }}
-                                    onMouseEnter={e => {
-                                      (e.currentTarget as HTMLElement).style.background = 'rgba(233,30,140,0.05)';
-                                      (e.currentTarget as HTMLElement).style.color = '#e91e8c';
-                                    }}
-                                    onMouseLeave={e => {
-                                      (e.currentTarget as HTMLElement).style.background = 'transparent';
-                                      (e.currentTarget as HTMLElement).style.color = 'rgba(0,0,0,0.65)';
-                                    }}
-                                  >
-                                    <span style={{ color: 'rgba(233,30,140,0.4)', fontSize: '0.45rem' }}>▶</span>
-                                    {item.label}
-                                  </Link>
-                                ))}
-                              </div>
-                            ))}
-                          </div>
-                          <div className="px-6 py-3 border-t flex items-center justify-between" style={{ borderColor: 'rgba(0,0,0,0.06)', background: 'rgba(0,0,0,0.01)' }}>
-                            <span className="font-mono text-[0.5rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(0,0,0,0.3)' }}>
-                              Pan-India · GST Registered · MSME Certified
-                            </span>
                             <Link
                               href="/services"
-                              className="font-mono text-[0.5rem] tracking-[0.18em] uppercase font-semibold transition-colors"
-                              style={{ color: '#e91e8c' }}
-                              onMouseEnter={e => (e.currentTarget as HTMLElement).style.textDecoration = 'underline'}
-                              onMouseLeave={e => (e.currentTarget as HTMLElement).style.textDecoration = 'none'}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[0.65rem] font-semibold transition-all"
+                              style={{ background: '#1a1a2e', color: '#ffffff', fontFamily: 'Helvetica Neue' }}
+                              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#e91e8c'}
+                              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = '#1a1a2e'}
                             >
-                              View All Services →
+                              View All Services
+                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                              </svg>
                             </Link>
                           </div>
                         </motion.div>
