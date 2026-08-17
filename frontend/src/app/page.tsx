@@ -291,65 +291,121 @@ function Hero({ slides, settings, services }: { slides: any[]; settings: any; se
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// 2. TRUSTED BY BRANDS SECTION
+// 2. TRUSTED BY BRANDS SECTION — Modern marquee
 // ══════════════════════════════════════════════════════════════════════════════
 function TrustedBrands({ brands }: { brands: any[] }) {
-  const { ref, inView } = useReveal(0.2);
   if (!brands?.length) return null;
 
+  // Brand card colors for text-only brands
+  const COLORS = ['#e91e8c','#1a1a2e','#7c3aed','#0ea5e9','#059669','#d97706','#dc2626','#0284c7'];
+
+  // Duplicate brands for seamless infinite loop
+  const doubled = [...brands, ...brands, ...brands];
+
   return (
-    <section className="py-10 md:py-14 px-6 md:px-12 border-b" style={{ background: '#ffffff', borderColor: 'rgba(0,0,0,0.06)' }}>
-      <div className="max-w-[1400px] mx-auto">
-        <div ref={ref} className={`reveal ${inView ? 'visible' : ''}`}>
-          <p className="font-mono text-[0.55rem] tracking-[0.3em] uppercase mb-8 text-center flex items-center justify-center gap-3" style={{ color: 'rgba(0,0,0,0.35)' }}>
-            <span className="w-8 h-px bg-black/20 inline-block" />
-            Trusted by Leading Brands
-            <span className="w-8 h-px bg-black/20 inline-block" />
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6 md:gap-x-14">
-            {brands.map((brand: any, i: number) => (
-              <motion.div
-                key={brand._id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: i * 0.06, duration: 0.5 }}
-                className="flex flex-col items-center gap-2 group cursor-default"
+    <section className="py-10 md:py-14 border-b overflow-hidden" style={{ background: '#ffffff', borderColor: 'rgba(0,0,0,0.06)' }}>
+      {/* Header */}
+      <div className="px-6 md:px-12 mb-8">
+        <div className="max-w-[1400px] mx-auto flex items-center justify-center">
+          <div className="flex items-center gap-4">
+            <div className="h-px flex-1 w-16" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.12))' }} />
+            <p className="font-mono text-[0.52rem] tracking-[0.3em] uppercase flex items-center gap-2" style={{ color: 'rgba(0,0,0,0.35)' }}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#e91e8c' }} />
+              Trusted by Leading Brands
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#e91e8c' }} />
+            </p>
+            <div className="h-px flex-1 w-16" style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.12), transparent)' }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Infinite marquee */}
+      <div className="relative">
+        {/* Left/right fades */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(90deg, #ffffff 0%, transparent 100%)' }} />
+        <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(270deg, #ffffff 0%, transparent 100%)' }} />
+
+        {/* Scrolling track */}
+        <div
+          className="flex gap-4 w-max"
+          style={{ animation: 'brandScroll 30s linear infinite' }}
+          onMouseEnter={e => (e.currentTarget as HTMLElement).style.animationPlayState = 'paused'}
+          onMouseLeave={e => (e.currentTarget as HTMLElement).style.animationPlayState = 'running'}
+        >
+          {doubled.map((brand: any, i: number) => {
+            const color = COLORS[i % COLORS.length];
+            return (
+              <div
+                key={`${brand._id}-${i}`}
+                className="flex-shrink-0 flex items-center justify-center group cursor-default transition-all duration-300"
+                style={{
+                  height: '72px',
+                  minWidth: '140px',
+                  padding: '0 20px',
+                  background: '#ffffff',
+                  border: '1.5px solid rgba(0,0,0,0.07)',
+                  borderRadius: '12px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                  transition: 'all 0.25s',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.borderColor = `${color}40`;
+                  (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 16px ${color}18`;
+                  (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,0,0,0.07)';
+                  (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
+                  (e.currentTarget as HTMLElement).style.transform = 'none';
+                }}
               >
                 {brand.logoUrl ? (
-                  <div className="flex items-center justify-center" style={{ height: '48px', width: 'auto', maxWidth: '120px' }}>
-                    <img
-                      src={imgUrl(brand.logoUrl)}
-                      alt={brand.name}
-                      className="object-contain max-h-full max-w-full transition-all duration-300"
-                      style={{ filter: 'grayscale(100%) opacity(40%)', transition: 'filter 0.3s' }}
-                      onMouseEnter={e => { (e.target as HTMLImageElement).style.filter = 'grayscale(0%) opacity(100%)'; }}
-                      onMouseLeave={e => { (e.target as HTMLImageElement).style.filter = 'grayscale(100%) opacity(40%)'; }}
-                      onError={e => {
-                        // On broken image, hide img and show brand name text
-                        const img = e.target as HTMLImageElement;
-                        img.style.display = 'none';
-                        const parent = img.parentElement;
-                        if (parent) {
-                          parent.innerHTML = `<span style="font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(0,0,0,0.25)">${brand.name}</span>`;
-                        }
-                      }}
-                    />
-                  </div>
+                  <img
+                    src={imgUrl(brand.logoUrl)}
+                    alt={brand.name}
+                    className="max-h-[40px] w-auto object-contain"
+                    style={{ filter: 'grayscale(60%) opacity(60%)', transition: 'filter 0.3s' }}
+                    onMouseEnter={e => (e.target as HTMLImageElement).style.filter = 'grayscale(0%) opacity(100%)'}
+                    onMouseLeave={e => (e.target as HTMLImageElement).style.filter = 'grayscale(60%) opacity(60%)'}
+                    onError={e => {
+                      const img = e.target as HTMLImageElement;
+                      img.style.display = 'none';
+                      const parent = img.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<span style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:${color}">${brand.name}</span>`;
+                      }
+                    }}
+                  />
                 ) : (
-                  <span
-                    className="font-display text-[1.1rem] md:text-[1.5rem] tracking-wider uppercase transition-all duration-300"
-                    style={{ color: 'rgba(0,0,0,0.22)', letterSpacing: '0.05em' }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#c9a96e'}
-                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'rgba(0,0,0,0.22)'}
+                  <span style={{
+                    fontFamily: "'Syne', sans-serif",
+                    fontSize: '0.85rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    color: color,
+                    opacity: 0.7,
+                    transition: 'opacity 0.3s',
+                  }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = '1'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = '0.7'}
                   >
                     {brand.name}
                   </span>
                 )}
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
+
+      {/* CSS animation */}
+      <style>{`
+        @keyframes brandScroll {
+          from { transform: translateX(0); }
+          to   { transform: translateX(calc(-100% / 3)); }
+        }
+      `}</style>
     </section>
   );
 }
