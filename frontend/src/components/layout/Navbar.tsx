@@ -201,95 +201,88 @@ export default function Navbar() {
                     <AnimatePresence>
                       {servicesOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                          initial={{ opacity: 0, y: 8, scale: 0.98 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                          exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                          transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                           className="absolute top-full mt-2 overflow-hidden"
                           style={{
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            width: '760px',
+                            width: '540px',
                             background: '#ffffff',
-                            boxShadow: '0 24px 64px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.07)',
-                            border: '1px solid rgba(0,0,0,0.07)',
-                            borderRadius: '16px',
+                            boxShadow: '0 16px 48px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06)',
+                            border: '1px solid rgba(0,0,0,0.08)',
+                            borderRadius: '14px',
                           }}
                           onMouseEnter={handleServicesEnter}
                           onMouseLeave={handleServicesLeave}
                         >
-                          {/* Top header */}
-                          <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b"
-                            style={{ borderColor: 'rgba(0,0,0,0.06)', background: 'linear-gradient(135deg, #fdf2f8 0%, #faf0ff 100%)' }}>
+                          {/* Header */}
+                          <div className="flex items-center justify-between px-5 py-3 border-b"
+                            style={{ borderColor: 'rgba(0,0,0,0.06)', background: 'linear-gradient(90deg, #fdf2f8, #faf4ff)' }}>
                             <div className="flex items-center gap-2">
-                              <div className="w-1.5 h-4 rounded-full" style={{ background: '#e91e8c' }} />
-                              <span className="font-bold text-[0.82rem]" style={{ color: '#1a1a2e', fontFamily: "'Syne', sans-serif" }}>Photography Services</span>
+                              <div className="w-1 h-3.5 rounded-full" style={{ background: '#e91e8c' }} />
+                              <span className="font-bold text-[0.78rem]" style={{ color: '#1a1a2e', fontFamily: "'Syne', sans-serif" }}>
+                                Photography Services
+                              </span>
                             </div>
-                            <div className="flex items-center gap-3">
-                              {['Pan-India', 'GST Registered', 'MSME Certified'].map(b => (
-                                <span key={b} className="font-mono text-[0.44rem] tracking-[0.1em] uppercase px-2 py-0.5 rounded"
-                                  style={{ background: 'rgba(233,30,140,0.08)', color: '#e91e8c' }}>{b}</span>
-                              ))}
-                            </div>
+                            <span className="font-mono text-[0.44rem] tracking-[0.1em] uppercase px-2 py-0.5 rounded"
+                              style={{ background: 'rgba(233,30,140,0.1)', color: '#e91e8c' }}>
+                              Pan-India
+                            </span>
                           </div>
 
-                          {/* Services grid */}
-                          <div className="p-5">
-                            <div className="grid grid-cols-2 gap-1">
-                              {dynamicCategories.map((cat) => (
-                                <div key={cat.group} className="mb-3">
-                                  {/* Category header */}
-                                  <div className="flex items-center gap-2 px-3 py-1.5 mb-1 rounded-lg"
-                                    style={{ background: 'rgba(233,30,140,0.04)' }}>
-                                    <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: '#e91e8c' }} />
-                                    <span className="font-mono text-[0.48rem] tracking-[0.2em] uppercase font-semibold" style={{ color: '#e91e8c' }}>
-                                      {cat.group}
-                                    </span>
-                                  </div>
-                                  {/* Items */}
+                          {/* Items — 3 column compact grid */}
+                          <div className="p-4">
+                            {dynamicCategories.map((cat) => (
+                              <div key={cat.group} className="mb-3 last:mb-0">
+                                {/* Category label */}
+                                <p className="font-mono text-[0.44rem] tracking-[0.2em] uppercase mb-1.5 px-1"
+                                  style={{ color: '#e91e8c', fontWeight: 600 }}>
+                                  {cat.group}
+                                </p>
+                                {/* 3-col grid */}
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
                                   {cat.items.map(item => (
                                     <Link
                                       key={item.slug}
                                       href={`/services/${item.slug}`}
-                                      className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[0.76rem] font-medium transition-all duration-150 group"
-                                      style={{ color: 'rgba(0,0,0,0.6)', fontFamily: 'Helvetica Neue, Helvetica, sans-serif' }}
+                                      className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-[0.68rem] font-medium transition-all duration-150"
+                                      style={{ color: 'rgba(0,0,0,0.58)', fontFamily: 'Helvetica Neue, Helvetica, sans-serif', lineHeight: 1.3 }}
                                       onMouseEnter={e => {
-                                        (e.currentTarget as HTMLElement).style.background = 'rgba(233,30,140,0.06)';
+                                        (e.currentTarget as HTMLElement).style.background = 'rgba(233,30,140,0.07)';
                                         (e.currentTarget as HTMLElement).style.color = '#e91e8c';
-                                        (e.currentTarget as HTMLElement).style.paddingLeft = '14px';
                                       }}
                                       onMouseLeave={e => {
                                         (e.currentTarget as HTMLElement).style.background = 'transparent';
-                                        (e.currentTarget as HTMLElement).style.color = 'rgba(0,0,0,0.6)';
-                                        (e.currentTarget as HTMLElement).style.paddingLeft = '12px';
+                                        (e.currentTarget as HTMLElement).style.color = 'rgba(0,0,0,0.58)';
                                       }}
                                     >
-                                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, opacity: 0.5 }}>
-                                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                                      </svg>
+                                      <span style={{ color: '#e91e8c', fontSize: '0.4rem', flexShrink: 0, opacity: 0.7 }}>●</span>
                                       {item.label}
                                     </Link>
                                   ))}
                                 </div>
-                              ))}
-                            </div>
+                              </div>
+                            ))}
                           </div>
 
-                          {/* Footer CTA */}
-                          <div className="px-5 py-3.5 border-t flex items-center justify-between"
+                          {/* Footer */}
+                          <div className="flex items-center justify-between px-5 py-3 border-t"
                             style={{ borderColor: 'rgba(0,0,0,0.06)', background: '#fafafa' }}>
-                            <p className="text-[0.72rem]" style={{ color: 'rgba(0,0,0,0.4)', fontFamily: 'Helvetica Neue' }}>
-                              14+ years · 2000+ projects across India
-                            </p>
+                            <span className="text-[0.65rem]" style={{ color: 'rgba(0,0,0,0.35)', fontFamily: 'Helvetica Neue' }}>
+                              GST · MSME · 14+ years
+                            </span>
                             <Link
                               href="/services"
-                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-[0.65rem] font-semibold transition-all"
-                              style={{ background: '#1a1a2e', color: '#ffffff', fontFamily: 'Helvetica Neue' }}
+                              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[0.62rem] font-semibold transition-all"
+                              style={{ background: '#1a1a2e', color: '#fff', fontFamily: 'Helvetica Neue' }}
                               onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#e91e8c'}
                               onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = '#1a1a2e'}
                             >
-                              View All Services
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              All Services
+                              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M5 12h14M12 5l7 7-7 7"/>
                               </svg>
                             </Link>

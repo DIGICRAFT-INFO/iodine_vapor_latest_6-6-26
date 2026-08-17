@@ -355,55 +355,153 @@ function TrustedBrands({ brands }: { brands: any[] }) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// 3. COMMERCIAL PHOTOGRAPHY SERVICES
+// 3. COMMERCIAL PHOTOGRAPHY SERVICES — Auto-slide carousel
 // ══════════════════════════════════════════════════════════════════════════════
 function Services({ services }: { services: any[] }) {
   const { ref, inView } = useReveal();
+  const [activeIdx, setActiveIdx] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   if (!services?.length) return null;
 
+  const CARD_W   = 220; // px per card
+  const VISIBLE  = 5;   // visible at once on desktop
+  const total    = services.length;
+
+  // Auto-slide every 5s — move one card left
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setActiveIdx(i => (i + 1) % total);
+    }, 5000);
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [total]);
+
+  // Scroll track to activeIdx
+  useEffect(() => {
+    if (!trackRef.current) return;
+    trackRef.current.scrollTo({ left: activeIdx * CARD_W, behavior: 'smooth' });
+  }, [activeIdx]);
+
+  const goTo = (i: number) => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setActiveIdx(i);
+    intervalRef.current = setInterval(() => {
+      setActiveIdx(idx => (idx + 1) % total);
+    }, 5000);
+  };
+
   return (
-    <section className="py-16 md:py-20 px-6 md:px-12" style={{ background: '#ffffff' }}>
-      <div className="max-w-[1400px] mx-auto">
+    <section className="py-14 md:py-20" style={{ background: '#ffffff' }}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+
         {/* Header */}
         <div ref={ref} className={`flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 reveal ${inView ? 'visible' : ''}`}>
           <div>
-            <h2 className="text-[1.6rem] md:text-[2rem] font-bold text-[#1a1a2e]" style={{ fontFamily: "'Syne', sans-serif" }}>
+            <p className="font-mono text-[0.55rem] tracking-[0.28em] uppercase mb-2 flex items-center gap-2" style={{ color: '#e91e8c' }}>
+              <span className="w-5 h-px inline-block" style={{ background: '#e91e8c' }} />What We Offer
+            </p>
+            <h2 className="font-bold text-[#1a1a2e] leading-[1.05]" style={{ fontFamily: "'Syne', sans-serif", fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
               Our Commercial Photography Services
             </h2>
             <p className="text-[0.85rem] mt-1.5" style={{ color: 'rgba(0,0,0,0.45)' }}>
               Tailored photography solutions for every business need.
             </p>
           </div>
-          <Link href="/services" className="btn-outline-sm shrink-0" data-hover>View All Services →</Link>
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Dot indicators */}
+            <div className="hidden md:flex items-center gap-1.5">
+              {services.map((_, i) => (
+                <button key={i} onClick={() => goTo(i)}
+                  className="transition-all duration-300 rounded-full"
+                  style={{
+                    width: i === activeIdx ? '20px' : '6px',
+                    height: '6px',
+                    background: i === activeIdx ? '#e91e8c' : 'rgba(0,0,0,0.15)',
+                  }} />
+              ))}
+            </div>
+            <Link href="/services"
+              className="inline-flex items-center gap-1.5 px-4 py-2 font-mono text-[0.55rem] tracking-[0.15em] uppercase font-semibold border rounded-lg transition-all"
+              style={{ borderColor: 'rgba(0,0,0,0.12)', color: '#1a1a2e' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = '#e91e8c'; (e.currentTarget as HTMLElement).style.color = '#e91e8c'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,0,0,0.12)'; (e.currentTarget as HTMLElement).style.color = '#1a1a2e'; }}>
+              All Services →
+            </Link>
+          </div>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px" style={{ border: '1px solid rgba(0,0,0,0.07)', borderRadius: '4px', overflow: 'hidden', background: 'rgba(0,0,0,0.07)' }}>
-          {services.map((svc: any, i: number) => (
-            <motion.div
-              key={svc._id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.04, duration: 0.5 }}
-              className="group bg-white px-5 py-6 flex flex-col items-start gap-3 cursor-pointer transition-all duration-300 hover:shadow-md relative overflow-hidden"
-              style={{ minHeight: '180px' }}
-            >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, rgba(233,30,140,0.03), transparent)' }} />
-              {/* Icon or number */}
-              <div className="w-10 h-10 flex items-center justify-center rounded-lg mb-1 text-[1.3rem] relative z-10" style={{ background: 'rgba(0,0,0,0.04)' }}>
-                {svc.icon || '📸'}
-              </div>
-              <div className="relative z-10">
-                <h3 className="font-semibold text-[0.82rem] leading-[1.3] mb-1.5 text-[#1a1a2e]" style={{ fontFamily: "'Syne', sans-serif" }}>
-                  {svc.name}
-                </h3>
-                <p className="text-[0.72rem] leading-[1.6]" style={{ color: 'rgba(0,0,0,0.45)' }}>
-                  {svc.shortDesc?.slice(0, 60)}{svc.shortDesc?.length > 60 ? '…' : ''}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+        {/* Carousel */}
+        <div className="relative overflow-hidden">
+          {/* Left fade */}
+          <div className="absolute left-0 top-0 bottom-0 w-8 z-10 pointer-events-none" style={{ background: 'linear-gradient(90deg, #ffffff, transparent)' }} />
+          {/* Right fade */}
+          <div className="absolute right-0 top-0 bottom-0 w-8 z-10 pointer-events-none" style={{ background: 'linear-gradient(270deg, #ffffff, transparent)' }} />
+
+          {/* Scrollable track */}
+          <div
+            ref={trackRef}
+            className="flex gap-4 overflow-x-auto pb-2"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'smooth' }}
+          >
+            {services.map((svc: any, i: number) => (
+              <Link
+                key={svc._id}
+                href={`/services/${svc.slug || ''}`}
+                className="group flex-shrink-0 flex flex-col border rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg"
+                style={{
+                  width: `${CARD_W}px`,
+                  background: i === activeIdx ? 'linear-gradient(135deg, #fff0f8, #fdf4ff)' : '#ffffff',
+                  borderColor: i === activeIdx ? 'rgba(233,30,140,0.25)' : 'rgba(0,0,0,0.08)',
+                  boxShadow: i === activeIdx ? '0 4px 20px rgba(233,30,140,0.1)' : 'none',
+                  transition: 'all 0.35s ease',
+                  textDecoration: 'none',
+                }}
+                onClick={() => goTo(i)}
+              >
+                {/* Service image or icon top */}
+                {svc.imageUrl ? (
+                  <div className="overflow-hidden" style={{ height: '120px' }}>
+                    <img src={imgUrl(svc.imageUrl)} alt={svc.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      style={{ filter: 'grayscale(20%)' }} />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center" style={{ height: '90px', background: 'rgba(233,30,140,0.05)' }}>
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-[1.5rem]"
+                      style={{ background: 'rgba(233,30,140,0.1)' }}>
+                      {svc.icon || '📸'}
+                    </div>
+                  </div>
+                )}
+
+                {/* Content */}
+                <div className="p-4 flex flex-col flex-1">
+                  <h3 className="font-bold text-[0.82rem] leading-[1.3] mb-1.5 text-[#1a1a2e] group-hover:text-[#e91e8c] transition-colors"
+                    style={{ fontFamily: "'Syne', sans-serif" }}>
+                    {svc.name}
+                  </h3>
+                  {svc.shortDesc && (
+                    <p className="text-[0.68rem] leading-[1.55] mb-3 flex-1" style={{ color: 'rgba(0,0,0,0.45)' }}>
+                      {svc.shortDesc.slice(0, 65)}{svc.shortDesc.length > 65 ? '…' : ''}
+                    </p>
+                  )}
+                  <span className="inline-flex items-center gap-1 font-bold text-[0.62rem] tracking-[0.08em] uppercase mt-auto"
+                    style={{ color: '#e91e8c' }}>
+                    View Details
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </span>
+                </div>
+
+                {/* Active indicator bar */}
+                {i === activeIdx && (
+                  <div className="h-0.5 w-full" style={{ background: 'linear-gradient(90deg, #e91e8c, #c4167a)' }} />
+                )}
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Mobile CTA */}
