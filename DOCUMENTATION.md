@@ -1,0 +1,839 @@
+# Iodine Vapor — Complete Website Documentation
+
+## Overview
+
+Iodine Vapor is a full-stack photography & videography business website with a powerful CMS (Content Management System). Every piece of content on the public website is controlled from the Admin Panel — no code changes needed.
+
+---
+
+## 🔑 FOR CEO / BUSINESS OWNER
+
+### What You Can Control
+
+| What | Where to Change | Result |
+|------|----------------|--------|
+| Hero images & text on every page | Admin → Slides/CMS | Website hero sections update instantly |
+| Company stats (12+ years, 500+ projects) | Admin → Site Settings → Stats | Homepage & about page stats update |
+| Contact info (email, phone, address) | Admin → Site Settings → Contact | Contact page & homepage update |
+| About us text & image | Admin → Site Settings → About | About sections on all pages update |
+| Client brand list | Admin → Site Settings → About → Client Brands | Brand tags on about sections |
+| Social media links | Admin → Site Settings → Social | Footer social icons update |
+| Logo & site name | Admin → Site Settings → Brand | Navbar & footer update |
+| SEO (Google search appearance) | Admin → SEO Manager | Per-page meta titles & descriptions |
+
+### Key Business Pages
+
+| Page | URL | Purpose |
+|------|-----|---------|
+| Homepage | `/` | First impression — hero, services, portfolio, testimonials |
+| About | `/about` | Company story, client brands, testimonials |
+| Services | `/services` | What you offer — from Services CRUD |
+| Products | `/products` | Equipment/prints for sale — from Products CRUD |
+| Portfolio | `/portfolio` | Visual showcase — from Portfolio CRUD |
+| Workshops | `/workshops` | Photography workshops — from Workshops CRUD |
+| Blog | `/blog` | Articles & insights — from Blog CRUD |
+| FAQ | `/faq` | Common questions — from FAQs CRUD |
+| Contact | `/contact` | Enquiry form + contact details |
+
+### How Content Gets Updated
+
+1. Login to Admin Panel (`/admin`)
+2. Go to the relevant section (e.g., Portfolio)
+3. Add/Edit/Delete items
+4. Changes appear on the website immediately (no deploy needed)
+
+---
+
+## 👤 FOR ADMIN USER (Content Manager)
+
+### Admin Panel Access
+
+- URL: `http://yourdomain.com/admin`
+- Login with email + password
+- Roles: `admin` (content management) / `superadmin` (full access + user management)
+
+### Content Management Sections
+
+#### 1. Slides / CMS (Page Heroes)
+Controls the hero section on every page of the website.
+
+**Pages available:** home, about, services, portfolio, workshops, blog, faq, contact, quote, navbar, footer
+
+**Per slide you can set:**
+- **Mini Title** — small eyebrow text (e.g., "Pan-India Photography")
+- **Title** — big heading text
+- **Subtitle** — secondary heading
+- **Paragraph** — description text
+- **Each text field has:** color, font size, font weight, font family, text align, italic, uppercase
+- **Content Position** — 9-point grid (top-left, center, bottom-right, etc.)
+- **Background Image** — upload or pick from media library
+- **BG Color / BG Gradient** — solid color or CSS gradient
+- **Overlay Opacity** — 0 to 1 (darkens image for text readability)
+- **Link URL + Link Text** — optional CTA button
+- **Order** — display order when multiple slides exist
+- **Active** — toggle visibility
+
+**Desktop behavior:** Multiple slides for same page = side-by-side panels
+**Mobile behavior:** Single slide visible, auto-advances every 5 sec, swipeable
+
+#### 2. Services
+- Name, Icon (emoji), Short Description, Full Description
+- Image, Features list
+- Order & Active status
+- Shows on: Homepage services section, Services page, Contact form dropdown
+
+#### 3. Portfolio
+- Title, Category, Image, Description
+- Client name, Year, Featured flag
+- Shows on: Homepage reel, Portfolio page (with category filter + lightbox)
+
+#### 4. Products
+- Name, Category, Short/Full Description
+- Multiple images, Price/MRP, SKU
+- In Stock, Featured, Best Seller flags
+- Tags, Specifications (key-value pairs)
+- SEO fields (meta title, meta description)
+- Shows on: Products page (grid + search + filter), Product detail page
+
+#### 5. Blog
+- Title, Category, Content (full article)
+- Cover Image, Excerpt, Author
+- Tags, Published/Draft status
+- Featured flag, SEO fields
+- Shows on: Homepage blog section, Blog page (grid + pagination), Blog detail page
+
+#### 6. FAQs
+- Question, Answer, Category
+- Order & Active status
+- Shows on: FAQ page (accordion grouped by category)
+
+#### 7. Workshops
+- Title, Description, Content
+- Cover Image, Date, Duration, Location
+- Seats, Price (or Free), Online flag
+- Featured, Active, Category
+- Registration (users can register)
+- Shows on: Homepage workshops section, Workshops page
+
+#### 8. Testimonials
+- Name, Company, Role, Content
+- Rating (1-5 stars), Image
+- Featured, Active, Order
+- Shows on: About page testimonials section
+
+#### 9. Enquiries
+- View all form submissions (contact, quote, workshop registrations)
+- Update status: new → read → replied → closed
+- Add notes
+- Delete enquiries
+
+#### 10. Media Library
+- Upload images/videos/PDFs
+- Organize by folder
+- Used across: Slides, Products, Portfolio, Blogs, Settings
+
+#### 11. Site Settings
+Groups: Brand, About, Colors, Contact, Social, Stats, Footer
+
+| Key | Purpose |
+|-----|---------|
+| `site_name` | Website name in navbar/footer |
+| `site_tagline` | Footer subtitle |
+| `site_logo` | Navbar logo image |
+| `hero_eyebrow` | Default hero eyebrow text |
+| `about_text` | About section paragraph |
+| `about_image` | About section image |
+| `client_brands` | Comma-separated client names |
+| `contact_email` | Email shown on contact page |
+| `contact_phone` | Phone shown on contact page |
+| `contact_address` | Address shown on contact page |
+| `social_instagram/youtube/linkedin/behance` | Social links in footer |
+| `years_experience` | Stat: "12+" |
+| `projects_count` | Stat: "500+" |
+| `schools_count` | Stat: "100+" |
+| `cinemas_count` | Stat: "32" |
+| `footer_copy` | Footer copyright text |
+| `primary/secondary/accent/bg/text_color` | Theme colors |
+
+#### 12. SEO Manager
+- Per-page meta configuration
+- Meta Title, Meta Description, Keywords
+- OG Image, Canonical URL
+
+#### 13. Admin Users (Superadmin only)
+- Create new admins
+- Toggle active/inactive
+- View all admin accounts
+
+---
+
+## 🛠️ FOR DEVELOPER / CLIENT (Technical)
+
+### Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 14 (App Router), React, TypeScript |
+| Styling | Tailwind CSS, CSS Custom Properties, Framer Motion |
+| State/Data | @tanstack/react-query, Axios |
+| Backend | Node.js, Express.js |
+| Database | MongoDB (Mongoose ODM) |
+| Auth | JWT (HttpOnly cookies + localStorage) |
+| File Upload | Multer → local disk storage |
+| Security | Helmet, CORS, Rate Limiting, Mongo Sanitize |
+
+### Project Structure
+
+```
+iodinevapor-fixed/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/index.js    # All controller logic
+│   │   ├── models/index.js         # All Mongoose schemas
+│   │   ├── routes/index.js         # All Express routes
+│   │   ├── middleware/auth.js      # JWT auth + role authorization
+│   │   ├── middleware/upload.js    # Multer file upload
+│   │   ├── utils/seed.js           # Database seeder
+│   │   └── server.js               # Express app + MongoDB connect
+│   ├── public/uploads/             # Uploaded media files
+│   ├── .env                        # Environment variables
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── app/                    # Next.js App Router pages
+│   │   │   ├── page.tsx            # Homepage
+│   │   │   ├── about/page.tsx
+│   │   │   ├── services/page.tsx
+│   │   │   ├── products/page.tsx   # Product listing
+│   │   │   ├── products/[slug]/    # Product detail
+│   │   │   ├── portfolio/page.tsx
+│   │   │   ├── workshops/page.tsx
+│   │   │   ├── blog/page.tsx
+│   │   │   ├── blog/[slug]/        # Blog detail
+│   │   │   ├── faq/page.tsx
+│   │   │   ├── contact/page.tsx
+│   │   │   └── admin/              # Admin panel (all CRUD pages)
+│   │   ├── components/
+│   │   │   ├── layout/Navbar.tsx   # Responsive navbar
+│   │   │   ├── layout/Footer.tsx   # Dynamic footer
+│   │   │   ├── sections/HeroFromSlides.tsx  # Reusable hero
+│   │   │   └── admin/AdminComponents.tsx    # Shared admin UI
+│   │   └── lib/
+│   │       ├── api.ts              # All API client functions
+│   │       └── auth.tsx            # Auth context provider
+│   ├── .env.local                  # Frontend env (API URL)
+│   └── package.json
+└── DOCUMENTATION.md                # This file
+```
+
+### API Endpoints
+
+**Public (no auth):**
+- `GET /api/v1/slides?page=home` — Active slides for a page
+- `GET /api/v1/services` — Active services
+- `GET /api/v1/products` — Products (pagination, search, category filter)
+- `GET /api/v1/products/:slug` — Single product detail
+- `GET /api/v1/portfolio` — Active portfolio items
+- `GET /api/v1/blogs` — Published blogs (pagination, category)
+- `GET /api/v1/blogs/:slug` — Single blog
+- `GET /api/v1/faqs` — Active FAQs
+- `GET /api/v1/workshops` — Active workshops
+- `GET /api/v1/testimonials` — Active testimonials
+- `GET /api/v1/settings` — All settings as key-value map
+- `GET /api/v1/categories` — Active product categories
+- `GET /api/v1/seo/:page` — SEO data for a page
+- `POST /api/v1/enquiries` — Submit enquiry form
+
+**Admin (JWT required):**
+- All `/admin` variants return all items (including inactive)
+- Full CRUD: POST (create), PUT/:id (update), DELETE/:id (delete)
+- `POST /api/v1/media/upload` — File upload
+- `POST /api/v1/settings/bulk` — Bulk save settings
+- `PUT /api/v1/seo/:page` — Upsert SEO data
+
+### Environment Variables
+
+**Backend (.env):**
+```
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/iodinevapor
+JWT_SECRET=your-secret-key
+JWT_EXPIRES_IN=30d
+FRONTEND_URL=http://localhost:3000
+```
+
+**Frontend (.env.local):**
+```
+NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+NEXT_PUBLIC_UPLOAD_URL=http://localhost:5000
+```
+
+### Running the Project
+
+```bash
+# Backend
+cd backend
+npm install
+npm run dev     # nodemon
+
+# Frontend
+cd frontend
+npm install
+npm run dev     # next dev on port 3000
+```
+
+### Key Design Decisions
+
+1. **No hardcoded content** — All public page content comes from API
+2. **Slides as universal hero** — Every page's hero is controlled from Slides/CMS
+3. **textStyleSchema** — Rich text styling (color, size, weight, family, align, italic, uppercase) per text field
+4. **Position system** — 9-point grid for content placement within heroes
+5. **Multi-panel desktop** — Multiple slides = side-by-side image panels on desktop
+6. **Mobile carousel** — Single slide with touch swipe + auto-advance on mobile
+7. **Settings as key-value** — Flexible site configuration without schema changes
+8. **React Query** — Client-side caching with 5-min stale time for settings
+9. **Image handling** — `imgUrl()` helper handles both absolute URLs and relative upload paths
+
+### Authorization Model
+
+| Role | Can Do |
+|------|--------|
+| `admin` | Full CRUD on all content, media, enquiries |
+| `superadmin` | Everything admin can + manage admin users (create, toggle, view) |
+
+### Delete Fix Applied
+Previously, Products/Portfolio/Enquiries/Product Categories required `superadmin` role to delete. Now any authenticated admin can delete content items. Only user management remains superadmin-only.
+
+---
+
+## Quick Reference
+
+### Admin URL: `/admin`
+### Frontend URL: `/`
+
+### To add content to any page:
+1. Admin → Slides/CMS → Select page tab → + Add New
+2. Fill title, subtitle, image, position → Save
+3. Refresh frontend page — content appears
+
+### To update site info:
+1. Admin → Site Settings → Select group (Brand/Contact/Stats/About)
+2. Fill fields → Save Changes
+3. All pages using that data update automatically
+
+
+---
+
+## 🎬 VIDEO SHOWCASE FEATURE (3D Camera + Video Reel)
+
+### Overview
+
+A premium interactive section on the homepage featuring a 3D rotating camera model (Three.js/WebGL) with a shutter button that triggers a flash effect, then reveals a video showcase with vertical sliding animations.
+
+### How It Works
+
+1. **User sees**: 3D camera rotating on right side + "OUR REEL" heading on left
+2. **User clicks**: Shutter button (circular gold button, right corner)
+3. **Flash fires**: Full-screen white flash (0.5 seconds)
+4. **Videos appear**: Auto-playing video reel with titles, vertical swipe navigation
+
+### Admin Management
+
+**Location**: Admin Panel → Sidebar → "Showcase Videos"
+
+**Fields per video:**
+| Field | Description |
+|-------|-------------|
+| Title | Display name (e.g., "Brand Film — Asian Paints") |
+| Video File | Upload or pick from Media Library |
+| Thumbnail | Optional preview image for admin list |
+| Description | Short text shown below video on frontend |
+| Order | Display order (lower = first) |
+| Active | Toggle visibility |
+
+**Operations**: Create, Edit, Delete, Toggle Active/Inactive
+
+### Frontend Behavior
+
+| View | Behavior |
+|------|----------|
+| **Desktop** | Camera on right (400px), text on left, shutter button top-right |
+| **Mobile** | Compact layout, camera below text, shutter button bottom-right |
+| **Videos (Desktop)** | 16:9 aspect ratio, auto-play muted loop, vertical dots navigation |
+| **Videos (Mobile)** | Same + touch swipe up/down to change video |
+| **Auto-advance** | Videos change every 8 seconds |
+| **No videos** | Section hidden entirely (returns null) |
+
+### Technical Details
+
+| Component | Technology |
+|-----------|-----------|
+| 3D Camera | Three.js + @react-three/fiber + @react-three/drei |
+| Rendering | WebGL via Canvas (client-side only, dynamic import with ssr:false) |
+| Animations | Framer Motion (flash, video transitions) |
+| Touch | Native touch events (vertical swipe detection) |
+| Model | Procedural geometry (no .glb file needed) |
+
+### 3D Camera Model Components
+- Camera body (dark metallic box)
+- Viewfinder prism (top)
+- Lens barrel (cylinder, front)
+- Lens glass (transparent blue)
+- Gold accent ring (torus)
+- Shutter button (gold cylinder, top-right)
+- Grip (right side)
+
+### API Endpoint
+
+```
+GET  /api/v1/showcase-videos          — Public (active videos, sorted by order)
+GET  /api/v1/showcase-videos/admin    — Admin (all videos)
+POST /api/v1/showcase-videos          — Create
+PUT  /api/v1/showcase-videos/:id      — Update
+DELETE /api/v1/showcase-videos/:id     — Delete
+```
+
+### Database Schema (ShowcaseVideo)
+
+```javascript
+{
+  title:       String (required),
+  videoUrl:    String (required),
+  videoId:     String,
+  thumbnail:   String,
+  description: String,
+  order:       Number (default: 0),
+  isActive:    Boolean (default: true),
+  createdAt:   Date (auto),
+  updatedAt:   Date (auto),
+}
+```
+
+---
+
+## 🛍️ PRODUCTS PAGE
+
+### Overview
+
+A complete product catalog with listing page, detail page, search, category filter, and pagination.
+
+### Pages
+
+| URL | Purpose |
+|-----|---------|
+| `/products` | Product listing with grid, search, filter, pagination |
+| `/products/[slug]` | Product detail with gallery, specs, price, CTA |
+
+### Product Listing Features
+- Hero section (from Slides/CMS)
+- Text search
+- Category filter (from Product Categories)
+- 4-column responsive grid (1→2→3→4)
+- Product cards with: image, badges (Featured/Best Seller/Out of Stock), category, name, short description, price/MRP
+- Pagination
+
+### Product Detail Features
+- Breadcrumb navigation
+- Image gallery with thumbnail selection
+- Category badge
+- Name + short description
+- Price with MRP strikethrough + discount percentage
+- Stock status indicator
+- "Enquire Now" CTA button
+- Full description
+- Specifications table (key-value)
+- Tags
+
+### Admin Management
+
+**Location**: Admin Panel → Products
+
+**Fields**: Name, Category, Short/Full Description, Multiple Images, Price/MRP, SKU, In Stock, Featured, Best Seller, Tags, Specifications, SEO, Active
+
+---
+
+## 🔧 DELETE FIX
+
+### Issue
+Products, Portfolio, Product Categories, and Enquiries required `superadmin` role to delete. Regular `admin` users could not delete these items.
+
+### Fix Applied
+Removed `authorize('superadmin')` middleware from delete routes for:
+- `DELETE /api/v1/products/:id`
+- `DELETE /api/v1/portfolio/:id`
+- `DELETE /api/v1/categories/:id` (product categories)
+- `DELETE /api/v1/enquiries/:id`
+
+Now any authenticated admin can delete content. Only user management (create/toggle admins) remains superadmin-only.
+
+---
+
+## 📋 COMPLETE FEATURE LIST
+
+| # | Feature | Admin | Frontend |
+|---|---------|-------|----------|
+| 1 | Slides/CMS (per-page heroes) | ✅ Full CRUD + Desktop/Mobile images | ✅ Multi-panel + carousel |
+| 2 | Services | ✅ Full CRUD + Slug auto-fix | ✅ Category groups + detail pages |
+| 3 | Service Detail Pages | — | ✅ `/services/[slug]` with related content |
+| 4 | Products | ✅ Full CRUD + Link to Services | ✅ Grid + detail page |
+| 5 | Portfolio | ✅ Full CRUD + Link to Services | ✅ Masonry + lightbox |
+| 6 | Blog | ✅ Full CRUD + Link to Services | ✅ Grid + detail + pagination |
+| 7 | FAQs | ✅ Full CRUD | ✅ Accordion grouped |
+| 8 | Workshops | ✅ Full CRUD | ✅ Cards + registration |
+| 9 | Testimonials | ✅ Full CRUD | ✅ About page |
+| 10 | Showcase Videos | ✅ Full CRUD | ✅ 3D camera + video reel |
+| 11 | Enquiries | ✅ Checkbox select + bulk delete + email compose | ✅ Popup form + file upload |
+| 12 | Media Library | ✅ Upload + organize | ✅ Used everywhere |
+| 13 | Site Settings | ✅ Key-value config | ✅ Brand, contact, stats, about |
+| 14 | SEO Manager | ✅ Per-page meta | ✅ Head tags |
+| 15 | Admin Users | ✅ Superadmin only | — |
+| 16 | Responsive Navbar | — | ✅ Mobile hamburger + logo fitted |
+| 17 | Dynamic Footer | — | ✅ Settings-based content + socials |
+| 18 | Admin Login Page | ✅ Split layout, dark theme | — |
+
+
+---
+
+## � SERVICES — COMPLETE ARCHITECTURE GUIDE
+
+### Overview
+
+Services system ek fully dynamic, admin-controlled feature hai jisme:
+1. **Admin** → Services create/edit/delete kar sakta hai
+2. **Admin** → Services ke saath Portfolio, Blog, Products link kar sakta hai (many-to-many)
+3. **Frontend** → `/services` page pe sab services category-wise list hoti hain
+4. **Frontend** → `/services/[slug]` pe har service ka apna detail page hai jisme linked content dikhta hai
+5. **Enquiry** → "Enquire Now" click karne pe popup form khulta hai (no page redirect)
+
+---
+
+### Service Data Model (MongoDB Schema)
+
+```javascript
+Service {
+  name:        String (required)         // "Architecture Photography"
+  slug:        String (unique, auto)     // "architecture-photography"
+  category:    String (enum)             // "Spaces" | "Industries" | "Products" | "People" | "Special Projects" | "Other"
+  icon:        String                    // icon key: "camera", "hospital", "building" etc.
+  shortDesc:   String                    // one-liner shown on cards
+  description: String                    // full description on detail page
+  imageUrl:    String                    // hero image
+  features:    [String]                  // bullet list of what's included
+  order:       Number                    // display order
+  isActive:    Boolean                   // show/hide on frontend
+}
+```
+
+### Slug System
+
+**Slugs auto-generate kaise hote hain:**
+- Create hone pe: `slugify(name)` → "Architecture Photography" → "architecture-photography"
+- Update pe: naam badlne par slug automatically regenerate hota hai
+- Old services jinka slug missing hai: Admin → Services → **"⚡ Fix Slugs"** button click karo
+
+**⚠️ IMPORTANT:** Existing services (pehle se DB mein saved) ka slug missing ho sakta hai.
+Ek baar **"⚡ Fix Slugs"** button zaroor click karo admin panel mein — ye ek hi baar karna hai.
+
+---
+
+### Category System
+
+Services 5 categories mein group hoti hain:
+
+| Category | Examples |
+|----------|---------|
+| Spaces | Architecture, Interior Design, Hotel & Hospitality, Retail, Cinema |
+| Industries | Industrial & Manufacturing, Schools |
+| Products | Commercial Products, E-commerce, Food & Beverage |
+| People | Corporate Portraits |
+| Special Projects | Tourism, Pet Photography |
+
+Frontend pe `/services` page inhe alag-alag sections mein group karke dikhata hai.
+
+---
+
+### Many-to-Many Linking System
+
+Portfolio, Blog, aur Product items kisi bhi service se link kiye ja sakte hain:
+
+```
+Portfolio item  ←→  Service(s)
+Blog post       ←→  Service(s)
+Product         ←→  Service(s)
+```
+
+**Admin mein kaise karo:**
+1. Admin → Portfolio → kisi item ka Edit kholo
+2. Form mein neeche "Link to Services" section aata hai
+3. Multi-select checkboxes — click karo select/unselect karne ke liye
+4. Save karo
+5. Ab `/services/architecture-photography` pe woh portfolio item dikhega
+
+**Same process** Blog aur Products ke liye bhi.
+
+---
+
+### Service Detail Page — `/services/[slug]`
+
+Jab koi user "View Details →" pe click karta hai, is page pe dikhta hai:
+
+**Structure:**
+```
+1. Hero Section
+   - Service naam (bada heading)
+   - Category badge
+   - Short description
+   - Stats: "4 Portfolio Items · 2 Articles"
+   - Buttons: "Enquire Now" (popup) + "View Portfolio"
+   - Service image (right side, desktop only)
+
+2. About This Service
+   - Full description text
+   - "What We Cover" — features bullet list
+
+3. Portfolio — [Service Name]  (sirf tab dikhe jab linked items hon)
+   - 2x2 / 3x3 / 4x4 image grid
+   - Hover: overlay with title + client name
+
+4. Related Products  (sirf tab dikhe jab linked products hon)
+   - Product cards grid
+
+5. Related Articles  (sirf tab dikhe jab linked blogs hon)
+   - Blog card grid with cover image + category + date
+
+6. CTA Section (dark navy)
+   - "Ready for [Service Name]?" heading
+   - "Get a Free Quote" button → popup
+```
+
+**API Call:**
+```
+GET /api/v1/services/:slug
+Response: {
+  service: {...},
+  relatedPortfolio: [...],
+  relatedBlogs: [...],
+  relatedProducts: [...]
+}
+```
+
+---
+
+### Enquiry Popup
+
+"Enquire Now" click karne pe ek modal popup khulta hai (koi page redirect nahi):
+
+**Form Fields:**
+- Full Name (required)
+- Phone (required)
+- Email (required)
+- Subject (auto pre-filled: "Architecture Photography Enquiry")
+- Message (required)
+- File Attach (optional — PDF, JPG, PNG, DOC)
+
+**After Submit:**
+- Data `/api/v1/enquiries` pe POST hota hai (multipart/form-data with file)
+- Admin → Enquiries mein `type: "service"` ke saath dikh jaata hai
+- File bhi save hoti hai backend storage mein
+
+---
+
+### Admin Services Page — `/admin/services`
+
+**Features:**
+- Service cards grid (3 columns)
+- Hover pe Edit / Delete buttons
+- Har card pe slug dikh raha hai (`/services/architecture-photography`) — verify karne ke liye
+- ⚠️ "No slug" warning agar slug missing hai
+
+**"⚡ Fix Slugs" Button:**
+- Sirf ek baar click karo existing services ke slugs generate karne ke liye
+- Naye services create karne pe slug automatically banta hai
+
+**Edit Form mein:**
+- URL Slug field (read-only) — current slug dikh raha hai
+- Category dropdown — sahi category select karo
+- Icon picker (17 icons available)
+- Features list (add/remove)
+- Service Image (pick from media library)
+
+---
+
+### Services API Endpoints
+
+| Method | URL | Auth | Purpose |
+|--------|-----|------|---------|
+| GET | `/api/v1/services` | Public | Active services list |
+| GET | `/api/v1/services/admin` | Admin | All services list |
+| GET | `/api/v1/services/:slug` | Public | Service detail + related content |
+| GET | `/api/v1/services/fix-slugs` | Admin | Auto-fix missing slugs |
+| POST | `/api/v1/services` | Admin | Create service |
+| PUT | `/api/v1/services/:id` | Admin | Update service (slug auto-updates) |
+| DELETE | `/api/v1/services/:id` | Admin | Delete service |
+
+---
+
+### Step-by-Step: Service Setup Karna
+
+1. **Backend start karo** (`npm start` in `/backend`)
+2. **Frontend start karo** (`npm run dev` in `/frontend`)
+3. **Login karo** → `localhost:3000/admin`
+4. **Admin → Services** pe jao
+5. **"⚡ Fix Slugs"** button click karo (one-time operation)
+6. Existing service select karo → **Edit**
+7. **Category** sahi set karo (e.g., "Spaces" for Architecture Photography)
+8. **Save** karo
+9. Ab **Admin → Portfolio** pe jao → kisi item edit karo
+10. "Link to Services" section mein woh service select karo
+11. Save karo
+12. Ab `localhost:3000/services/architecture-photography` pe jao — related portfolio dikhai dega
+
+---
+
+### Troubleshooting Services
+
+| Problem | Solution |
+|---------|----------|
+| "View Details" link nahi dikh raha | Service ka slug missing hai → Fix Slugs button click karo |
+| Detail page 404 error | Slug mismatch — Admin mein service card pe slug check karo |
+| Category "Other" dikh raha hai | Service edit karo → sahi category select karo → Save |
+| Related portfolio nahi dikh raha | Admin → Portfolio → item edit → "Link to Services" mein service select karo |
+| Enquiry popup submit nahi ho raha | Backend running hai ya nahi check karo (`localhost:5000`) |
+| File upload fail | File size check karo (max 250MB), format check karo (jpg/png/pdf) |
+
+
+
+### Theme Change — White/Light Professional Photography Theme
+
+The entire public website has been switched from a dark luxury theme to a clean white/light photography theme.
+
+**Color Palette:**
+| Color | Hex | Usage |
+|-------|-----|-------|
+| White | `#ffffff` | Page backgrounds |
+| Light Gray | `#f8f8f8` | Alternate section backgrounds |
+| Navy Dark | `#1a1a2e` | Text color, headings |
+| Pink | `#e91e8c` | Primary accent (from logo) |
+| Purple | `#c4a0d4` | Secondary accent |
+| Navy | `#1e1b4b` | Footer background |
+
+**Font Family:** Helvetica Neue (entire website + admin panel)
+
+### Navbar
+- Transparent background (no color)
+- Dark blue text, semibold
+- Hover: Pink color + light pink background pill
+- Active page: Pink underline
+- Mobile: Dropdown card (not fullscreen), tap outside to close
+- Logo: `Iodine-Logo.png` + "IodineVapor" text
+
+### Footer
+- Dark navy gradient background
+- Top gradient line (pink → purple → blue)
+- `iodineLogo.png` with light sky blue background box
+- Motion animations on scroll
+- Social icons with hover effects
+- Link hover: Pink + slide right
+- Copyright link to `/copyright` page
+
+### Service Cards (Homepage + /services)
+- Background image from admin (always visible, white overlay for readability)
+- Hover: Image zoom effect
+- "Enquire Now →" button always visible, links to `/contact`
+- Features list with pink bullets
+- Admin: Image upload via "Service Image" → Pick button
+
+### Hero Sections
+- Max 3 panels on desktop (side-by-side)
+- 4+ slides: Panels auto-cycle vertically every 5 seconds
+- Lighter overlays for white theme
+- Default title color: Dark navy (visible on light backgrounds)
+- Content position: 9-grid absolute positioning
+
+### Stats Section (Homepage)
+- Pink numbers (Bebas Neue font)
+- Semibold labels
+- No background — clean and simple
+- Responsive: wraps on mobile
+- Values from Admin → Site Settings → Stats
+
+### Products Page (`/products`)
+- Full product catalog with search, filter, pagination
+- Product detail page with image gallery, specs, price
+- Added to Navbar and Footer navigation
+
+### Video Showcase
+- Camera button (gradient border, fixed right side)
+- Click → white flash → fullscreen video player
+- Videos from Admin → Showcase Videos
+- Vertical swipe on mobile
+- Auto-advance every 8 seconds
+
+### Copyright Page (`/copyright`)
+- Full legal page with sections
+- Business registration badges
+- Linked from footer
+
+### Workshop Registration Flow
+- `/workshops/[slug]` — full detail page with registration form
+- User fills: Name, Email, Phone, Message
+- Backend saves to: workshop.registrations[] + Enquiry (type: workshop)
+- Admin sees: Admin → Enquiries → filter "workshop"
+- Seats tracking + "seats left" warning
+
+### Admin Panel Fixes
+- Dark theme preserved (separate from public white theme)
+- All input fields: Dark navy background
+- Labels, borders: Light colors visible on dark
+- Helvetica font throughout
+- Pink accent colors
+- Settings page: Group nav properly visible
+- SEO Manager: Colors fixed
+- Slides CMS: Filter buttons readable (pink active, gray inactive)
+- Delete operations: Work for all admin roles (not just superadmin)
+
+### Mobile Responsive
+- Navbar: Dropdown card menu (not fullscreen)
+- Tap outside to dismiss
+- Hero: Single slide carousel with touch swipe
+- All pages: Proper padding and font sizing
+- Touch targets: Min 44px
+
+### File Upload
+- Max size: 250MB (for large videos)
+- Supported: jpg, png, gif, webp, svg, mp4, webm, mov, pdf, doc
+- Storage: `backend/public/uploads/` (images/, videos/, pdfs/, documents/)
+
+---
+
+## 📱 RESPONSIVE BREAKPOINTS
+
+| Breakpoint | Width | Behavior |
+|-----------|-------|----------|
+| Mobile | < 768px | Single column, hamburger menu, carousel slides |
+| Tablet | 768px - 1024px | 2 columns, some panels |
+| Desktop | > 1024px | Full layout, multi-panel hero, all nav links |
+
+---
+
+## 🎨 DESIGN SYSTEM
+
+### Typography
+- **Body:** Helvetica Neue, 500 weight
+- **Headings:** Bebas Neue (display font)
+- **Serif accents:** DM Serif Display (subtitles)
+
+### Buttons
+- **Primary:** Pink background, white text, 600 weight
+- **Ghost:** Border only, dark text, hover → pink
+
+### Cards
+- White background, subtle border
+- Hover: Shadow + slight lift
+- Service cards: Background image with white overlay
+
+### Animations
+- **Word Motion:** Key headings gently float (5s cycle)
+- **Scroll Reveal:** Fade-in + slide-up on viewport enter
+- **Hover Effects:** Scale, color change, gap expansion
+- **Ticker/Marquee:** Continuous horizontal scroll, gradient background
