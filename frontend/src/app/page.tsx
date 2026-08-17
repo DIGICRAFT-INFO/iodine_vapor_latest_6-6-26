@@ -416,17 +416,15 @@ function TrustedBrands({ brands }: { brands: any[] }) {
 function Services({ services }: { services: any[] }) {
   const { ref, inView } = useReveal();
   const [activeIdx, setActiveIdx] = useState(0);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const trackRef    = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  if (!services?.length) return null;
+  const CARD_W = 220;
+  const total  = services?.length || 0;
 
-  const CARD_W   = 220; // px per card
-  const VISIBLE  = 5;   // visible at once on desktop
-  const total    = services.length;
-
-  // Auto-slide every 5s — move one card left
+  // Auto-slide every 5s
   useEffect(() => {
+    if (!total) return;
     intervalRef.current = setInterval(() => {
       setActiveIdx(i => (i + 1) % total);
     }, 5000);
@@ -435,9 +433,9 @@ function Services({ services }: { services: any[] }) {
 
   // Scroll track to activeIdx
   useEffect(() => {
-    if (!trackRef.current) return;
+    if (!trackRef.current || !total) return;
     trackRef.current.scrollTo({ left: activeIdx * CARD_W, behavior: 'smooth' });
-  }, [activeIdx]);
+  }, [activeIdx, total]);
 
   const goTo = (i: number) => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -446,6 +444,8 @@ function Services({ services }: { services: any[] }) {
       setActiveIdx(idx => (idx + 1) % total);
     }, 5000);
   };
+
+  if (!total) return null;
 
   return (
     <section className="py-14 md:py-20" style={{ background: '#ffffff' }}>

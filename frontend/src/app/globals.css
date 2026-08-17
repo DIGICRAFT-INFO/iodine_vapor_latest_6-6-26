@@ -73,6 +73,14 @@ a { color: inherit; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-left, .reveal-right { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+/* GLOBAL FIX: After 2s force-show all reveal elements that never got .visible */
+@keyframes forceReveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal, .reveal-left, .reveal-right {
+  animation: forceReveal 0.7s var(--ease-out) 2s forwards;
+}
 
 /* ── Buttons ───────────────────────────────────────────────────────────────── */
 .btn-primary {
