@@ -325,9 +325,9 @@ export default function Navbar() {
             <Link
               href="/contact"
               className="inline-flex items-center justify-center py-2.5 px-6 rounded text-[0.72rem] tracking-[0.08em] uppercase font-bold transition-all duration-300"
-              style={{ backgroundColor: '#e91e8c', color: '#ffffff', fontFamily: 'Helvetica Neue, Helvetica, sans-serif', minWidth: '140px' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = '#1a1a2e'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = '#e91e8c'; }}
+              style={{ backgroundColor: '#1a1a2e', color: '#ffffff', fontFamily: 'Helvetica Neue, Helvetica, sans-serif', minWidth: '140px' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = '#e91e8c'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = '#1a1a2e'; }}
             >
               Get a Quote
             </Link>
