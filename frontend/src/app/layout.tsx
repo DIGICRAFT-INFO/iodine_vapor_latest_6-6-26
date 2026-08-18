@@ -1,14 +1,13 @@
 'use client';
 import './globals.css';
-import { Bebas_Neue, DM_Serif_Display, Syne, Space_Mono } from 'next/font/google';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { useState, useEffect, useRef } from 'react';
 
-const bebas     = Bebas_Neue({ subsets: ['latin'], weight: '400', variable: '--font-bebas' });
-const dmSerif   = DM_Serif_Display({ subsets: ['latin'], weight: '400', style: ['normal', 'italic'], variable: '--font-dm-serif' });
-const syne      = Syne({ subsets: ['latin'], weight: ['400','500','600','700','800'], variable: '--font-syne' });
-const spaceMono = Space_Mono({ subsets: ['latin'], weight: ['400','700'], style: ['normal','italic'], variable: '--font-space-mono' });
+const bebas     = { variable: '' };
+const dmSerif   = { variable: '' };
+const syne      = { variable: '' };
+const spaceMono = { variable: '' };
 
 function Cursor() {
   const dotRef  = useRef<HTMLDivElement>(null);
