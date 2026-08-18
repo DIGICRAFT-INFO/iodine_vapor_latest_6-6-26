@@ -6,6 +6,9 @@ import { useQuery } from '@tanstack/react-query';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import VideoShowcase from '@/components/sections/VideoShowcase';
+import { IoLocation } from 'react-icons/io5';
+import { MdEmail } from 'react-icons/md';
+import { LuPhoneCall } from 'react-icons/lu';
 import {
   slidesApi, servicesApi, portfolioApi, workshopsApi,
   settingsApi, testimonialsApi, brandsApi, imgUrl,
@@ -1023,18 +1026,25 @@ function CallToAction({ settings }: { settings: any }) {
           {(settings?.contact_phone || settings?.contact_email) && (
             <div className="flex flex-wrap items-center justify-center gap-6 mt-10 pt-8 border-t" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
               {settings.contact_phone && (
-                <a href={`tel:${settings.contact_phone}`} className="flex items-center gap-2 text-[0.8rem] transition-colors hover:text-white" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  <span>📞</span> {settings.contact_phone}
+                <a href={`tel:${settings.contact_phone}`}
+                  className="flex items-center gap-2 text-[0.8rem] transition-colors hover:text-white"
+                  style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <LuPhoneCall size={14} color="#e91e8c" />
+                  {settings.contact_phone}
                 </a>
               )}
               {settings.contact_email && (
-                <a href={`mailto:${settings.contact_email}`} className="flex items-center gap-2 text-[0.8rem] transition-colors hover:text-white" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  <span>✉️</span> {settings.contact_email}
+                <a href={`mailto:${settings.contact_email}`}
+                  className="flex items-center gap-2 text-[0.8rem] transition-colors hover:text-white"
+                  style={{ color: 'rgba(255,255,255,0.4)' }}>
+                  <MdEmail size={15} color="#e91e8c" />
+                  {settings.contact_email}
                 </a>
               )}
               {settings.contact_address && (
                 <span className="flex items-center gap-2 text-[0.8rem]" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  <span>📍</span> {settings.contact_address}
+                  <IoLocation size={15} color="#e91e8c" />
+                  {settings.contact_address}
                 </span>
               )}
             </div>
