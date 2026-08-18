@@ -182,7 +182,7 @@ export default function Navbar() {
                   >
                     <Link
                       href={link.href}
-                      className="flex items-center gap-1.5 text-[0.72rem] tracking-[0.06em] uppercase font-semibold px-3 py-2 rounded transition-colors duration-200"
+                      className="nav-slide-link flex items-center gap-1.5 text-[0.72rem] tracking-[0.06em] uppercase font-semibold px-3 py-2 relative overflow-hidden"
                       style={{ color: '#1a1a2e', fontFamily: 'Helvetica Neue, Helvetica, sans-serif' }}
                       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#e91e8c'; }}
                       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#1a1a2e'; }}
@@ -297,7 +297,7 @@ export default function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-[0.72rem] tracking-[0.06em] uppercase font-semibold px-3 py-2 rounded transition-colors duration-200 block"
+                    className="nav-slide-link text-[0.72rem] tracking-[0.06em] uppercase font-semibold px-3 py-2 block relative overflow-hidden"
                     style={{ color: '#1a1a2e', fontFamily: 'Helvetica Neue, Helvetica, sans-serif' }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#e91e8c'; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#1a1a2e'; }}
